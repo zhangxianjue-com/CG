@@ -1,0 +1,23 @@
+# 构建产物
+build/
+bin/
+out/
+
+# demo 渲染输出（满意的结果手动复制到 notes/assets/ 作为笔记插图）
+output/
+*.ppm
+
+# IDE
+.vs/
+.vscode/
+*.user
+
+# CMake 缓存
+CMakeCache.txt
+CMakeFiles/
+
+# 网站依赖（site/dist 为构建产物，需要提交用于 Pages）
+node_modules/
+
+# 个人临时文件（不入库、不发布）
+test*.text

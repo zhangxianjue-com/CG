@@ -1,0 +1,5 @@
+[
+  { "title": "学习路线图", "path": "notes/01-roadmap/roadmap.excalidraw" },
+  { "title": "坐标系（2D/3D · 极坐标 · 球坐标）", "path": "notes/02-math/coordinate.excalidraw" },
+  { "title": "向量（Vec3）", "path": "notes/02-math/vec3.excalidraw" }
+]
