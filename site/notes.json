@@ -2,5 +2,5 @@
   { "title": "学习路线图", "path": "notes/01-roadmap/roadmap.excalidraw" },
   { "title": "渲染器原理", "path": "notes/03-renderer/renderer.excalidraw" },
   { "title": "坐标系（2D/3D · 极坐标 · 球坐标）", "path": "notes/02-math/coordinate.excalidraw" },
-  { "title": "向量与矩阵（Vec3）", "path": "notes/02-math/vec3.excalidraw" }
+  { "title": "向量与矩阵", "path": "notes/02-math/vector-matrix.excalidraw" }
 ]

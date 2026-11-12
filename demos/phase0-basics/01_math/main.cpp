@@ -1,5 +1,5 @@
 // demo 01_math：向量运算验证
-// 对应笔记：notes/00-basics/01-vec3.md
+// 对应笔记：notes/02-math/vector-matrix.excalidraw
 // 目标：亲手验证向量运算的几何性质，建立对实现的信任
 
 #include <cg/cg.h>
