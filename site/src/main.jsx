@@ -68,7 +68,10 @@ function App() {
       const r = await fetch(REPO_ROOT + note.path);
       if (!r.ok) throw new Error("加载失败: " + r.status);
       const raw = await r.json();
-      setScene(rewriteLinks(raw, note.path));
+      // 场景与笔记路径绑定：只有属于当前笔记的场景才渲染。
+      // （Excalidraw 只在挂载时读取 initialData，若先挂载旧场景，
+      //  新数据回来时不会重挂载，画面会停留在旧笔记）
+      setScene({ path: note.path, data: rewriteLinks(raw, note.path) });
     } catch (e) {
       setScene(null);
       setError(String(e));
@@ -147,20 +150,25 @@ function App() {
     </>
   );
 
+  const sceneMatchesCurrent = Boolean(scene && current && scene.path === current.path);
+
   const canvas = (
     <div style={{ flex: 1, position: "relative", minHeight: 0 }}>
       {error && (
         <div style={{ padding: 24, color: "#c92a2a", fontSize: 14 }}>出错了：{error}</div>
       )}
-      {!error && scene && (
+      {!error && sceneMatchesCurrent && (
         <Excalidraw
-          key={current ? current.path : "scene"}
+          key={scene.path}
           initialData={{
-            elements: scene.elements,
-            appState: { ...(scene.appState || {}), scrollToContent: true },
+            elements: scene.data.elements,
+            appState: { ...(scene.data.appState || {}), scrollToContent: true },
           }}
           viewModeEnabled={true}
         />
+      )}
+      {!error && !sceneMatchesCurrent && (
+        <div style={{ padding: 24, color: "#868e96", fontSize: 14 }}>加载中…</div>
       )}
     </div>
   );
