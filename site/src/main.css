@@ -1,0 +1,10 @@
+/* 让 App 容器占满视口（手机端避开 100vh 与地址栏的兼容问题） */
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+#root {
+  height: 100%;
+}

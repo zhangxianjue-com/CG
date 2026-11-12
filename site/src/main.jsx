@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { Excalidraw } from "@excalidraw/excalidraw";
 import "@excalidraw/excalidraw/index.css";
+import "./main.css";
 
 // 从 site/dist/ 出发：
 //   ../notes.json  -> site/notes.json（笔记清单）
