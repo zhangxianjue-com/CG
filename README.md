@@ -34,7 +34,8 @@ CG/
 │   ├── INDEX.md             # 进度看板
 │   ├── _template.md         # 笔记模板（Excalidraw 版约定）
 │   ├── 01-roadmap/          # 路线图（Excalidraw，与各笔记双向互链）
-│   └── 02-math/             # 数学笔记：vec3.excalidraw · coordinate.excalidraw
+│   ├── 02-math/             # 数学笔记：vec3.excalidraw · coordinate.excalidraw
+│   └── 03-renderer/         # 渲染器原理：renderer.excalidraw
 ├── engine/                  # 渲染引擎库（静态库 cg），从 demo 共享代码中生长
 │   ├── include/cg/          # 公共头文件（math/ core/ integrators/ raster/ io/）
 │   └── src/

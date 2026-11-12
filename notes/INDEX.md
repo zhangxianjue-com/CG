@@ -6,6 +6,7 @@
 
 ## 阶段 0 · 基础
 
+- [x] 渲染器原理 → [笔记](03-renderer/renderer.excalidraw)
 - [x] 坐标系 → [笔记](02-math/coordinate.excalidraw)
 - [x] 向量与矩阵（Vec3）→ [笔记](02-math/vec3.excalidraw)
 - [ ] 向量变换
