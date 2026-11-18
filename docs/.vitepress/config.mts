@@ -32,7 +32,7 @@ export default defineConfig({
       },
       {
         text: '工具',
-        items: [{ text: 'CG 笔记发布器', link: '/tools/publisher' }],
+        items: [{ text: 'CG 项目管理器', link: '/tools/publisher' }],
       },
     ],
     outline: { label: '本页目录', level: [2, 3] },
