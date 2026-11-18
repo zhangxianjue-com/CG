@@ -28,6 +28,15 @@ export default defineConfig({
               { text: '向量与矩阵', link: '/notes/02-math/vector-matrix' },
             ],
           },
+          {
+            text: 'CPP 编程语言',
+            items: [
+              { text: 'Visual Studio 编辑器', link: '/notes/01-cpp/visual-studio' },
+              { text: '数据类型', link: '/notes/01-cpp/data-types' },
+              { text: '面向对象编码', link: '/notes/01-cpp/oop' },
+              { text: 'GLM 数学库', link: '/notes/01-cpp/glm' },
+            ],
+          },
         ],
       },
       {
