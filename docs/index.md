@@ -6,7 +6,7 @@ title: CG · 图形学学习笔记
 
 从零重新学习计算机图形学：一边记笔记，一边写 demo，最终沉淀出一个小型渲染引擎。
 
-> 📌 本站直接在 `docs/` 里维护：页面是 Markdown，配图是 SVG，每页附原始 [Excalidraw](https://excalidraw.com) 文件可下载编辑（`notes/` 原稿目录已从仓库移除）。
+> 📌 本站直接在 `docs/` 里维护：页面是 Markdown，配图是 SVG。
 
 ## 快速入口
 
@@ -26,10 +26,9 @@ title: CG · 图形学学习笔记
 
 ## 笔记工作流
 
-1. 在 `docs/notes/` 里维护页面（Markdown），配图与原始 `.excalidraw` 文件放 `docs/public/` 供下载
-2. 需要从 Excalidraw 原稿重新生成页面时，把 `notes/` 目录放回仓库根目录（一图一主题、路线图卡片 `link` 互链），发布器会自动转换
-3. 打开桌面端发布器，点「一键构建并发布」——构建产物自动铺到 `docs/` 并推送到 GitHub Pages
+1. 在 `docs/notes/` 里直接维护 Markdown 页面，配图 SVG 放 `docs/public/diagrams/`
+2. 打开桌面端发布器，点「一键构建并发布」——构建产物自动铺到 `docs/` 并推送到 GitHub Pages
 
 ## 关于发布器
 
-`tools/CG笔记发布器.exe` 是一个本地桌面小程序：一键完成「转换笔记 + VitePress 构建 + 产物铺到 docs/ 并推送」。GitHub Pages 直接部署 main 分支的 `docs/` 文件夹，推送后约 1 分钟自动生效。
+`tools/CG笔记发布器.exe` 是一个本地桌面小程序：一键完成「VitePress 构建 + 产物铺到 docs/ 并推送」，详见[工具文档](/tools/publisher)。GitHub Pages 直接部署 main 分支的 `docs/` 文件夹，推送后约 1 分钟自动生效。

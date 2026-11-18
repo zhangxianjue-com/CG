@@ -4,7 +4,7 @@ title: "向量与矩阵"
 
 # 向量与矩阵
 
-<Diagram src="/diagrams/02-math/vector-matrix.svg" alt="向量与矩阵" source="/notes/02-math/vector-matrix.excalidraw" />
+![向量与矩阵](/diagrams/02-math/vector-matrix.svg)
 
 ## 图文要点
 
@@ -47,7 +47,3 @@ z（朝屏幕外）<br>坐标写法（基础）：v = (x, y, z) —— 用 3 个
 ### ④ 踩坑记录
 
 · 用 double 不用 float（渲染累积误差出噪点）   · 归一化零向量会除零 → NaN：先 near_zero() 判断兜底<br>· 叉乘 y 分量符号最易抄错 → 用 x̂×ŷ=ẑ 自测   · 点乘判断朝向记得先归一化，否则数值无意义
----
-
-> 📝 本页由脚本从 Excalidraw 笔记原稿自动生成。
-> 原图：[02-math/vector-matrix.excalidraw](/notes/02-math/vector-matrix.excalidraw)（可用 [Excalidraw](https://excalidraw.com) 或 VSCode 扩展打开编辑）

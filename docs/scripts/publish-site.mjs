@@ -16,7 +16,7 @@ import { fileURLToPath } from 'node:url'
 const DOCS = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const DIST = join(DOCS, '.vitepress', 'dist')
 
-// 上次构建的生成物（notes/ 目录只清 *.html 与 *.excalidraw，*.md 是源文件不能动）
+// 上次构建的生成物（notes/ 目录只清 *.html，*.md 是源文件不能动）
 for (const p of ['index.html', '404.html', 'hashmap.json']) {
   rmSync(join(DOCS, p), { force: true })
 }
@@ -26,7 +26,7 @@ for (const d of ['assets', 'diagrams']) {
 const notesDir = join(DOCS, 'notes')
 if (existsSync(notesDir)) {
   for (const ent of readdirSync(notesDir)) {
-    if (ent.endsWith('.html') || ent.endsWith('.excalidraw')) {
+    if (ent.endsWith('.html')) {
       rmSync(join(notesDir, ent), { force: true })
     }
   }

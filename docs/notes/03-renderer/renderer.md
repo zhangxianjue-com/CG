@@ -4,7 +4,7 @@ title: "渲染器原理"
 
 # 渲染器原理
 
-<Diagram src="/diagrams/03-renderer/renderer.svg" alt="渲染器原理" source="/notes/03-renderer/renderer.excalidraw" />
+![渲染器原理](/diagrams/03-renderer/renderer.svg)
 
 ## 图文要点
 
@@ -30,7 +30,3 @@ RenderPixel(x, y) 是渲染器的核心 —— 后续所有阶段，本质都在
 ### ④ 踩坑记录
 
 先做离线渲染：像素写进 PPM 文件再打开看，比直接上窗口 / GPU 简单一个数量级<br>调试时把像素涂成纯色（纯红 / 纯绿），一眼看出坐标与循环边界是否正确
----
-
-> 📝 本页由脚本从 Excalidraw 笔记原稿自动生成。
-> 原图：[03-renderer/renderer.excalidraw](/notes/03-renderer/renderer.excalidraw)（可用 [Excalidraw](https://excalidraw.com) 或 VSCode 扩展打开编辑）

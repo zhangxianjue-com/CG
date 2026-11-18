@@ -4,13 +4,11 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "docs:dev": "node scripts/render-notes.mjs && vitepress dev",
-    "docs:build": "node scripts/render-notes.mjs && vitepress build && node scripts/publish-site.mjs",
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build && node scripts/publish-site.mjs",
     "docs:preview": "vitepress preview"
   },
   "devDependencies": {
-    "@excalidraw/utils": "^0.1.8",
-    "jsdom": "^25.0.0",
     "vitepress": "^1.6.3"
   }
 }

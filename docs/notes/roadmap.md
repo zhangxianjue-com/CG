@@ -4,7 +4,7 @@ title: "CG · 图形学学习路线图"
 
 # CG · 图形学学习路线图
 
-<Diagram src="/diagrams/01-roadmap/roadmap.svg" alt="CG · 图形学学习路线图" source="/notes/01-roadmap/roadmap.excalidraw" />
+![CG · 图形学学习路线图](/diagrams/01-roadmap/roadmap.svg)
 
 ## 阶段 0 · 基础
 
@@ -77,7 +77,3 @@ title: "CG · 图形学学习路线图"
 - [ ] GPU 光线追踪
 - [ ] 体积渲染
 - [ ] 降噪
----
-
-> 📝 本页由脚本从 Excalidraw 笔记原稿自动生成。
-> 原图：[01-roadmap/roadmap.excalidraw](/notes/01-roadmap/roadmap.excalidraw)（可用 [Excalidraw](https://excalidraw.com) 或 VSCode 扩展打开编辑）
