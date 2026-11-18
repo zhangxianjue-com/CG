@@ -79,5 +79,5 @@ title: "CG · 图形学学习路线图"
 - [ ] 降噪
 ---
 
-> 📝 本页由脚本从 [`notes/01-roadmap/roadmap.excalidraw`](https://github.com/zhangxianjue-com/CG/blob/main/notes/01-roadmap/roadmap.excalidraw) 自动生成。
+> 📝 本页由脚本从 Excalidraw 笔记原稿自动生成。
 > 原图：[01-roadmap/roadmap.excalidraw](/notes/01-roadmap/roadmap.excalidraw)（可用 [Excalidraw](https://excalidraw.com) 或 VSCode 扩展打开编辑）

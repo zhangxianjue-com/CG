@@ -9,7 +9,7 @@
  * 特殊处理：notes/01-roadmap/roadmap.excalidraw 生成路线图看板页
  * （阶段标题 + 卡片清单，卡片 link 指向对应笔记页面）。
  */
-import { readFileSync, writeFileSync, mkdirSync, copyFileSync, rmSync, readdirSync, statSync } from 'node:fs'
+import { readFileSync, writeFileSync, mkdirSync, copyFileSync, rmSync, readdirSync, statSync, existsSync } from 'node:fs'
 import { dirname, join, resolve, relative, sep, posix } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { JSDOM } from 'jsdom'
@@ -316,8 +316,14 @@ function linkToPage(link, fromRel) {
 // ---------- 主流程 ----------
 
 async function main() {
-  const files = walk(NOTES)
+  // notes/ 已从仓库移除：目录不存在时跳过生成，保留已有页面与侧边栏清单；
+  // 以后把 notes/ 放回仓库根目录即可恢复「笔记 → 站点」的自动转换。
+  const files = existsSync(NOTES) ? walk(NOTES) : []
   log(`发现 ${files.length} 个 .excalidraw 文件`)
+  if (files.length === 0) {
+    log('notes/ 目录不存在，跳过页面生成（保留已有页面与清单）')
+    return
+  }
 
   rmSync(PAGES, { recursive: true, force: true })
   rmSync(PUBLIC_NOTES, { recursive: true, force: true })

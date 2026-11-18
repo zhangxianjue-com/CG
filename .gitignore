@@ -19,8 +19,17 @@ CMakeFiles/
 # 网站依赖
 node_modules/
 
-# VitePress 缓存；dist 为发布产物，由发布器 force-add 提交到 main 用于 Pages
+# VitePress 构建产物：dist 为中间产物；铺到 docs/ 根的产物由发布器 force-add 提交用于 Pages
+docs/.vitepress/dist/
 docs/.vitepress/cache/
+docs/index.html
+docs/404.html
+docs/assets/
+docs/hashmap.json
+docs/diagrams/
+docs/vp-icons.css
+docs/notes/**/*.html
+docs/notes/**/*.excalidraw
 
 # 笔记发布器构建产物
 tools/publisher/bin/
@@ -28,6 +37,3 @@ tools/publisher/obj/
 
 # 个人临时文件（不入库、不发布）
 test*.text
-
-# VitePress 构建产物（dist 由发布器 force-add 提交用于 Pages）
-docs/.vitepress/dist/

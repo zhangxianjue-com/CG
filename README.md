@@ -26,19 +26,19 @@
 | 3 | GPU 实时渲染 | [learnopengl.com](https://learnopengl.com/) |
 | 4 | 引擎整合与进阶 | — |
 
-详细进度看板见 [notes/INDEX.md](notes/INDEX.md)。
+详细进度看板见 [站点路线图页](https://zhangxianjue-com.github.io/CG/notes/roadmap.html)。
 
 ## 发布笔记站点
 
-笔记 → 站点的转换与发布由桌面小程序一键完成：**`tools/CG笔记发布器.exe`**（源码在 `tools/publisher/`，C# WinForms，需要 .NET 8 运行时）。
+站点的构建与发布由桌面小程序一键完成：**`tools/CG笔记发布器.exe`**（源码在 `tools/publisher/`，C# WinForms，需要 .NET 8 运行时）。
 
 流程：
 
-1. 在 `notes/` 里画好/修改 `.excalidraw` 笔记（路线图卡片的 `link` 保持互链）
+1. 维护 `docs/` 里的站点内容：页面在 `docs/notes/`，配图与原稿在 `docs/public/`（需要从 Excalidraw 原稿重新生成页面时，把 `notes/` 目录放回仓库根目录再发布）
 2. 双击 `tools/CG笔记发布器.exe` → 点「🚀 一键构建并发布」
-   - 转换脚本 `docs/scripts/render-notes.mjs` 自动：渲染 SVG → 提取文字生成页面 → 复制原文件
-   - VitePress 构建出 `docs/.vitepress/dist`
-   - 把 dist 提交进 main 分支并推送（GitHub Pages 部署 main 分支根目录，根 index.html 跳转到站点，约 1 分钟生效）
+   - `docs/scripts/render-notes.mjs`：渲染 SVG → 提取文字生成页面 → 复制原文件（`notes/` 不存在时自动跳过）
+   - VitePress 构建，`docs/scripts/publish-site.mjs` 把产物铺到 `docs/` 根目录
+   - 提交 docs/ 并推送（GitHub Pages 直接部署 main 分支的 `docs/` 文件夹，约 1 分钟生效）
 
 也可以命令行使用：`CG笔记发布器.exe --cli all`（或 `build` / `publish` / `open` 单步）。
 
@@ -46,17 +46,12 @@
 
 ```
 CG/
-├── notes/                   # 笔记原稿（一个领域一个目录，笔记即 Excalidraw 图）
-│   ├── INDEX.md             # 进度看板
-│   ├── _template.md         # 笔记模板（Excalidraw 版约定）
-│   ├── 01-roadmap/          # 路线图（Excalidraw，与各笔记双向互链）
-│   ├── 02-math/             # 数学笔记：vector-matrix.excalidraw · coordinate.excalidraw
-│   └── 03-renderer/         # 渲染器原理：renderer.excalidraw
-├── docs/                    # VitePress 笔记站点（notes/ 自动转换为站点内容）
-│   ├── index.md             # 站点首页
-│   ├── notes/               # 生成页面（脚本产物，勿手改）
-│   ├── public/              # 生成 SVG 图 + .excalidraw 原文件（脚本产物）
-│   └── scripts/render-notes.mjs  # 转换脚本：图渲染 + 文字提取 + 清单生成
+├── docs/                    # VitePress 笔记站点（GitHub Pages 直接部署此目录）
+│   ├── index.md             # 站点首页（构建后生成 index.html、assets/ 等产物，勿手改产物）
+│   ├── notes/               # 笔记页面（.md 源 + 构建出的 .html）
+│   ├── public/              # SVG 配图 + .excalidraw 原文件（供下载）
+│   ├── .vitepress/          # 站点配置 / 主题
+│   └── scripts/             # render-notes.mjs（笔记转换）· publish-site.mjs（产物铺到 docs/）
 ├── tools/                   # 桌面发布器：CG笔记发布器.exe（源码 publisher/）
 ├── engine/                  # 渲染引擎库（静态库 cg），从 demo 共享代码中生长
 │   ├── include/cg/          # 公共头文件（math/ core/ integrators/ raster/ io/）
@@ -71,10 +66,9 @@ CG/
 
 ## 工作流规则
 
-1. **一个主题 = 一张 `<topic>.excalidraw`（笔记即图解，不生成 .md，按领域归入 `notes/NN-area/`） + 一个 demo**
+1. **站点页面直接在 `docs/notes/` 里维护**（Markdown 源）；需要从 Excalidraw 原稿重新生成页面时，把 `notes/` 目录放回仓库根目录（一图一主题、路线图卡片 `link` 互链）再发布
 2. **代码下沉规则**：demo 里出现两次以上且稳定的代码 → 下沉到 `engine/`，demo 改为引用
-3. **笔记与 [路线图](notes/01-roadmap/roadmap.excalidraw) 互链**：路线图主题卡片的 `link` 直接指向该主题的 `.excalidraw`
-4. 阶段 0-2 的 demo 是命令行程序，输出 PPM/PNG 图片，不依赖窗口
+3. 阶段 0-2 的 demo 是命令行程序，输出 PPM/PNG 图片，不依赖窗口
 
 ## 构建
 

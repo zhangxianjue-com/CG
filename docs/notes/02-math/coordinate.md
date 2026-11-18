@@ -26,5 +26,5 @@ x = r·sinθ·cosφ<br>y = r·sinθ·sinφ<br>z = r·cosθ
 极坐标 ↔ 直角坐标：x = r·cosθ，y = r·sinθ；r = √(x²+y²)，θ = atan2(y, x)      球坐标：x = r·sinθ·cosφ，y = r·sinθ·sinφ，z = r·cosθ<br>踩坑：① 图形学默认右手系（z 出屏），左右手系只差 z 方向 ② 球坐标 θ 有两种定义（与 +z 夹角 / 与 xy 平面夹角），用前先确认 ③ atan2(y, x) 参数顺序易写反
 ---
 
-> 📝 本页由脚本从 [`notes/02-math/coordinate.excalidraw`](https://github.com/zhangxianjue-com/CG/blob/main/notes/02-math/coordinate.excalidraw) 自动生成。
+> 📝 本页由脚本从 Excalidraw 笔记原稿自动生成。
 > 原图：[02-math/coordinate.excalidraw](/notes/02-math/coordinate.excalidraw)（可用 [Excalidraw](https://excalidraw.com) 或 VSCode 扩展打开编辑）

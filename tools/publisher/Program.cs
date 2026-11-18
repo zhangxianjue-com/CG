@@ -6,7 +6,7 @@ namespace CGPublish;
 
 /// <summary>
 /// CG 笔记发布器：一键把 notes/ 里的 Excalidraw 笔记构建成 VitePress 站点并发布到 GitHub Pages。
-/// 部署方式：把构建产物提交进 main 分支并推送（GitHub Pages 部署 main 分支根目录，根 index.html 跳转到站点）。
+/// 部署方式：GitHub Pages 直接部署 main 分支的 /docs 文件夹（构建产物铺到 docs/ 根目录，提交推送后自动生效）。
 /// GUI（双击运行）或 CLI（CG笔记发布器.exe --cli all）两种用法。
 /// </summary>
 internal static class Program
@@ -46,7 +46,7 @@ internal sealed class PublishEngine
     }
 
     private static string DocsDir(string repoRoot) => Path.Combine(repoRoot, "docs");
-    private static string DistDir(string repoRoot) => Path.Combine(DocsDir(repoRoot), ".vitepress", "dist");
+    private static string SiteIndex(string repoRoot) => Path.Combine(DocsDir(repoRoot), "index.html");
 
     private void Info(string line) => Log?.Invoke(line, false);
     private void Err(string line) => Log?.Invoke(line, true);
@@ -164,31 +164,30 @@ internal sealed class PublishEngine
                 return false;
             }
         }
-        Info("→ 转换笔记并构建 VitePress 站点（npm run docs:build）");
+        Info("→ 转换笔记并构建 VitePress 站点（npm run docs:build，产物铺到 docs/ 根）");
         if (!await RunAsync(docs, "npm run docs:build"))
         {
             Err("站点构建失败");
             return false;
         }
-        Info("✓ 构建完成：" + DistDir(repoRoot));
+        Info("✓ 构建完成：" + DocsDir(repoRoot));
         return true;
     }
 
-    /// <summary>发布：把构建产物提交进 main 分支并推送（GitHub Pages 部署 main 分支根目录）</summary>
+    /// <summary>发布：把构建产物提交进 main 分支并推送（GitHub Pages 部署 main 分支的 /docs 文件夹）</summary>
     public async Task<bool> PublishAsync(string repoRoot)
     {
-        var dist = DistDir(repoRoot);
-        if (!Directory.Exists(dist) || !File.Exists(Path.Combine(dist, "index.html")))
+        if (!File.Exists(SiteIndex(repoRoot)))
         {
-            Err("构建产物不存在，请先构建站点");
+            Err("构建产物不存在（docs/index.html），请先构建站点");
             return false;
         }
-        // 保证 .nojekyll 存在：否则 GitHub Pages 会用 Jekyll 构建并排除点开头目录，.vitepress 无法访问、站点 404
-        var nojekyll = Path.Combine(repoRoot, ".nojekyll");
+        // 保证 docs/.nojekyll 存在：否则 GitHub Pages 会用 Jekyll 构建并排除点开头目录，.vitepress 无法访问、站点 404
+        var nojekyll = Path.Combine(DocsDir(repoRoot), ".nojekyll");
         if (!File.Exists(nojekyll))
         {
             File.WriteAllText(nojekyll, "");
-            Info("→ 已创建 .nojekyll（跳过 Jekyll，确保 .vitepress 目录可访问）");
+            Info("→ 已创建 docs/.nojekyll（跳过 Jekyll，确保 .vitepress 目录可访问）");
         }
         Info("→ 拉取远端更新（git pull --rebase origin main）");
         if (!await RunAsync(repoRoot, "git pull --rebase origin main"))
@@ -196,8 +195,8 @@ internal sealed class PublishEngine
             Err("拉取失败：如有未提交的修改请先处理，然后重试");
             return false;
         }
-        Info("→ 暂存构建产物（git add -f docs/.vitepress/dist .nojekyll）");
-        if (!await RunAsync(repoRoot, "git add -f docs/.vitepress/dist .nojekyll")) return false;
+        Info("→ 暂存站点产物（git add docs + 强制加入被忽略的生成文件）");
+        if (!await RunAsync(repoRoot, "git add docs && git add -f docs/index.html docs/404.html docs/assets docs/diagrams docs/hashmap.json docs/notes")) return false;
 
         var hasChanges = await CaptureAsync(repoRoot, "git diff --cached --quiet && echo YES || echo NO");
         if (hasChanges?.Trim() == "YES")
@@ -218,7 +217,7 @@ internal sealed class PublishEngine
             Err("推送失败：请确认 SSH 密钥（~/.ssh）有该仓库的写权限");
             return false;
         }
-        Info("✓ 已推送，GitHub Pages 将自动重新部署");
+        Info("✓ 已推送，GitHub Pages 将自动重新部署 docs/ 文件夹");
         return true;
     }
 
@@ -411,7 +410,7 @@ internal sealed class MainForm : Form
                 if (parsed != null) _siteUrl = PublishEngine.SiteUrl(parsed.Value.owner, parsed.Value.repo);
             }
             Append($"CG 笔记发布器已就绪。仓库：{_repoBox.Text}", false);
-            Append("流程：转换笔记 → VitePress 构建 → 提交 dist 到 main 分支并推送（GitHub Pages 部署 main，自动生效）", false);
+            Append("流程：转换笔记 → VitePress 构建 → 产物铺到 docs/ 并推送（Pages 直接部署 main 分支的 /docs 文件夹）", false);
         };
     }
 
