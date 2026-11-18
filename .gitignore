@@ -16,8 +16,17 @@ output/
 CMakeCache.txt
 CMakeFiles/
 
-# 网站依赖（site/dist 为构建产物，需要提交用于 Pages）
+# 网站依赖
 node_modules/
+
+# VitePress 构建产物（docs/.vitepress/dist 由发布器推送到 gh-pages，不入主分支）
+docs/.vitepress/dist/
+docs/.vitepress/cache/
+
+# 笔记发布器构建产物与发布临时目录
+tools/publisher/bin/
+tools/publisher/obj/
+.publish-github/
 
 # 个人临时文件（不入库、不发布）
 test*.text

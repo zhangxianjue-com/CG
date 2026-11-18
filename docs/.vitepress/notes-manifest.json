@@ -1,0 +1,35 @@
+{
+  "sidebar": [
+    {
+      "text": "学习路线",
+      "items": [
+        {
+          "text": "CG · 图形学学习路线图",
+          "link": "/notes/roadmap"
+        }
+      ]
+    },
+    {
+      "text": "数学基础",
+      "items": [
+        {
+          "text": "坐标系",
+          "link": "/notes/02-math/coordinate"
+        },
+        {
+          "text": "向量与矩阵",
+          "link": "/notes/02-math/vector-matrix"
+        }
+      ]
+    },
+    {
+      "text": "渲染器原理",
+      "items": [
+        {
+          "text": "渲染器原理",
+          "link": "/notes/03-renderer/renderer"
+        }
+      ]
+    }
+  ]
+}

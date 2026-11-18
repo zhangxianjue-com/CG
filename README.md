@@ -10,9 +10,11 @@
 
 ## 在线预览
 
-笔记已部署到 GitHub Pages（公开仓库），浏览器打开即可在线查看全部 Excalidraw 笔记：
+笔记站点由 [VitePress](https://vitepress.dev) 构建并部署到 GitHub Pages（公开仓库）：
 
 ➡️ **https://zhangxianjue-com.github.io/CG/**
+
+每个 `.excalidraw` 笔记自动生成一个页面：图渲染成 SVG、图内文字提取成可搜索的正文，并附原始文件下载。
 
 ## 路线图
 
@@ -26,16 +28,37 @@
 
 详细进度看板见 [notes/INDEX.md](notes/INDEX.md)。
 
+## 发布笔记站点
+
+笔记 → 站点的转换与发布由桌面小程序一键完成：**`tools/CG笔记发布器.exe`**（源码在 `tools/publisher/`，C# WinForms，需要 .NET 8 运行时）。
+
+流程：
+
+1. 在 `notes/` 里画好/修改 `.excalidraw` 笔记（路线图卡片的 `link` 保持互链）
+2. 双击 `tools/CG笔记发布器.exe` → 点「🚀 一键构建并发布」
+   - 转换脚本 `docs/scripts/render-notes.mjs` 自动：渲染 SVG → 提取文字生成页面 → 复制原文件
+   - VitePress 构建出 `docs/.vitepress/dist`
+   - 强制推送 dist 到 `gh-pages` 分支（GitHub Pages 自动部署该分支）
+3. 首次发布前只需一次：仓库 Settings → Pages 里把 Source 选为 `gh-pages` 分支（或把 GitHub Token 填入发布器点「检查/开启 Pages」）
+
+也可以命令行使用：`CG笔记发布器.exe --cli all`（或 `build` / `publish` / `pages` / `open` 单步）。
+
 ## 目录结构
 
 ```
 CG/
-├── notes/                   # 笔记系统（一个领域一个目录，笔记即 Excalidraw 图）
+├── notes/                   # 笔记原稿（一个领域一个目录，笔记即 Excalidraw 图）
 │   ├── INDEX.md             # 进度看板
 │   ├── _template.md         # 笔记模板（Excalidraw 版约定）
 │   ├── 01-roadmap/          # 路线图（Excalidraw，与各笔记双向互链）
 │   ├── 02-math/             # 数学笔记：vector-matrix.excalidraw · coordinate.excalidraw
 │   └── 03-renderer/         # 渲染器原理：renderer.excalidraw
+├── docs/                    # VitePress 笔记站点（notes/ 自动转换为站点内容）
+│   ├── index.md             # 站点首页
+│   ├── notes/               # 生成页面（脚本产物，勿手改）
+│   ├── public/              # 生成 SVG 图 + .excalidraw 原文件（脚本产物）
+│   └── scripts/render-notes.mjs  # 转换脚本：图渲染 + 文字提取 + 清单生成
+├── tools/                   # 桌面发布器：CG笔记发布器.exe（源码 publisher/）
 ├── engine/                  # 渲染引擎库（静态库 cg），从 demo 共享代码中生长
 │   ├── include/cg/          # 公共头文件（math/ core/ integrators/ raster/ io/）
 │   └── src/

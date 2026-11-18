@@ -1,0 +1,53 @@
+---
+title: "向量与矩阵"
+---
+
+# 向量与矩阵
+
+<Diagram src="/diagrams/02-math/vector-matrix.svg" alt="向量与矩阵" source="/notes/02-math/vector-matrix.excalidraw" />
+
+## 图文要点
+
+### ① 向量写法
+
+|v| = √(3² + 4²) = 5 · 矩阵写法（高级）：把向量看作 1×3 / 3×1 矩阵，方便与变换矩阵运算
+行向量（1×3 矩阵）<br>v = [ x  y  z ]<br>横着写：1 行 3 列
+
+v = (3, 4, 0)
+列向量（3×1 矩阵）★ 推荐<br>    [ x ]<br>v = [ y ]<br>    [ z ]<br>竖着写：3 行 1 列
+
+转置（Transpose）<br>vᵀ：行 ↔ 列互换<br>[ x  y  z ]ᵀ = 列向量形式
+
+为什么推荐列向量：变换矩阵左乘列向量 M·v，与矩阵乘法顺序天然一致；<br>行向量则写作 vᵀ·Mᵀ（矩阵转置换边）
+
+z（朝屏幕外）<br>坐标写法（基础）：v = (x, y, z) —— 用 3 个分量表示，最直观（图例 v = (3, 4, 0)）
+### ② 向量运算（基础六则）
+
+| 加法 | 减法 | 数乘 |
+| --- | --- | --- |
+| a + b = (ax+bx, ay+by, az+bz) | a − b = (ax−bx, ay−by, az−bz) | k·a = (k·ax, k·ay, k·az) |
+| 对应分量相加；几何上 = 平行四边形法则 | = a + (−b)；箭头从 b 端指向 a 端 | 长度缩放 \|k\| 倍；k &lt; 0 反向 |
+| 取模 | 规范化（Normalize） | 点乘（数量积） |
+| \|a\| = √(ax² + ay² + az²) | â = a / \|a\| | a·b = ax·bx + ay·by + az·bz |
+| 向量的长度；恒 ≥ 0，零向量模为 0 | 单位向量：长度归一化为 1，只保留方向 | = \|a\|\|b\|cosθ；结果是标量，判夹角/投影/同向 |
+
+### ③ 叉乘（向量积）—— 仅 3D 向量
+
+| a × b 是向量：垂直于 a、b 所在平面 | 叉乘计算公式（3×3 行列式展开）： |
+| --- | --- |
+| 长度 \|a×b\| = \|a\|\|b\|sinθ —— 恰好等于 a、b 围成的平行四边形面积 | \| i  j  k  \|<br>a × b = \| ax ay az \|<br>        \| bx by bz \| |
+
+如何区分左手系 / 右手系：
+| 右手系：右手四指从 a 弯向 b（&lt; 180°），拇指指向即 a×b 方向（图形学默认） | = i·(ay·bz − az·by) − j·(ax·bz − az·bx) + k·(ax·by − ay·bx) |
+| --- | --- |
+| 左手系：按左手同样动作，a×b 方向相反 | x 分量 = ay·bz − az·by      y 分量 = az·bx − ax·bz（带负号）      z 分量 = ax·by − ay·bx |
+| 自检口诀：x̂ × ŷ = ẑ（右手系） | 记忆：分量循环『十字相乘相减』；y 分量因行列式展开带 − 号，最容易抄错 |
+
+验证：写完后用 (1,0,0)×(0,1,0) = (0,0,1) 自测；任意向量 × 自身 = 零向量
+### ④ 踩坑记录
+
+· 用 double 不用 float（渲染累积误差出噪点）   · 归一化零向量会除零 → NaN：先 near_zero() 判断兜底<br>· 叉乘 y 分量符号最易抄错 → 用 x̂×ŷ=ẑ 自测   · 点乘判断朝向记得先归一化，否则数值无意义
+---
+
+> 📝 本页由脚本从 [`notes/02-math/vector-matrix.excalidraw`](https://github.com/zhangxianjue-com/CG/blob/main/notes/02-math/vector-matrix.excalidraw) 自动生成。
+> 原图：[02-math/vector-matrix.excalidraw](/notes/02-math/vector-matrix.excalidraw)（可用 [Excalidraw](https://excalidraw.com) 或 VSCode 扩展打开编辑）

@@ -1,0 +1,46 @@
+/* Excalidraw 图卡片：白底卡片，明暗主题下都可读 */
+.diagram-card {
+  background: #ffffff;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 10px;
+  padding: 14px;
+  margin: 18px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.diagram-card .diagram-img-link {
+  display: block;
+}
+
+.diagram-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: #ffffff;
+}
+
+.diagram-card figcaption {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--vp-c-divider);
+  font-size: 12.5px;
+  color: var(--vp-c-text-2);
+}
+
+.diagram-card figcaption a {
+  font-weight: 500;
+}
+
+/* 大图在小屏可横向滚动 */
+@media (max-width: 640px) {
+  .diagram-card {
+    overflow-x: auto;
+  }
+  .diagram-card img {
+    min-width: 640px;
+  }
+}
