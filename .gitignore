@@ -19,14 +19,15 @@ CMakeFiles/
 # 网站依赖
 node_modules/
 
-# VitePress 构建产物（docs/.vitepress/dist 由发布器推送到 gh-pages，不入主分支）
-docs/.vitepress/dist/
+# VitePress 缓存；dist 为发布产物，由发布器 force-add 提交到 main 用于 Pages
 docs/.vitepress/cache/
 
-# 笔记发布器构建产物与发布临时目录
+# 笔记发布器构建产物
 tools/publisher/bin/
 tools/publisher/obj/
-.publish-github/
 
 # 个人临时文件（不入库、不发布）
 test*.text
+
+# VitePress 构建产物（dist 由发布器 force-add 提交用于 Pages）
+docs/.vitepress/dist/

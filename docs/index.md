@@ -32,4 +32,4 @@ title: CG · 图形学学习笔记
 
 ## 关于发布器
 
-`tools/CG笔记发布器.exe` 是一个本地桌面小程序：一键完成「渲染 SVG + 生成页面 + VitePress 构建 + 推送 gh-pages 分支」。首次发布前需在仓库 Settings → Pages 里把 Source 选为 `gh-pages` 分支（只需一次），或把 GitHub Token 填入发布器自动开启。
+`tools/CG笔记发布器.exe` 是一个本地桌面小程序：一键完成「渲染 SVG + 生成页面 + VitePress 构建 + 提交 dist 到 main 并推送」。GitHub Pages 部署 main 分支根目录，推送后约 1 分钟自动生效。

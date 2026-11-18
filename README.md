@@ -38,10 +38,9 @@
 2. 双击 `tools/CG笔记发布器.exe` → 点「🚀 一键构建并发布」
    - 转换脚本 `docs/scripts/render-notes.mjs` 自动：渲染 SVG → 提取文字生成页面 → 复制原文件
    - VitePress 构建出 `docs/.vitepress/dist`
-   - 强制推送 dist 到 `gh-pages` 分支（GitHub Pages 自动部署该分支）
-3. 首次发布前只需一次：仓库 Settings → Pages 里把 Source 选为 `gh-pages` 分支（或把 GitHub Token 填入发布器点「检查/开启 Pages」）
+   - 把 dist 提交进 main 分支并推送（GitHub Pages 部署 main 分支根目录，根 index.html 跳转到站点，约 1 分钟生效）
 
-也可以命令行使用：`CG笔记发布器.exe --cli all`（或 `build` / `publish` / `pages` / `open` 单步）。
+也可以命令行使用：`CG笔记发布器.exe --cli all`（或 `build` / `publish` / `open` 单步）。
 
 ## 目录结构
 
