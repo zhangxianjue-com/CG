@@ -1,18 +1,18 @@
 ---
-title: CG 项目管理器
+title: yushu-project-management
 ---
 
-# CG 项目管理器
+# yushu-project-management
 
 终端界面小工具（C++20 + [FTXUI](https://github.com/ArthurSonzogni/FTXUI)）：一键把 `docs/` 里的 Markdown 笔记构建成 VitePress 站点并发布到 GitHub Pages。
 
-- 已编译程序：`tools/CG 项目管理器.exe`
+- 已编译程序：`tools/yushu-project-management.exe`
 - 源码：`tools/publisher-cpp/`（`src/` 下 engine / cli / tui / main 四个模块）
 - 配套脚本：`docs/scripts/publish-site.mjs`（构建产物铺到 `docs/` 根目录）
 
 ## 使用（终端界面）
 
-1. 双击 `tools/CG 项目管理器.exe`，打开全屏终端界面
+1. 双击 `tools/yushu-project-management.exe`，打开全屏终端界面
 2. 「仓库目录」自动检测（从 exe 所在目录向上找 `.git`），也可点「浏览…」手动选择
 3. 按需点击：
 
@@ -30,11 +30,11 @@ title: CG 项目管理器
 ## 使用（CLI）
 
 ```
-CG 项目管理器.exe --cli all                  # 构建 + 发布 + 验证（默认命令）
-CG 项目管理器.exe --cli build                # 仅构建
-CG 项目管理器.exe --cli publish              # 仅发布
-CG 项目管理器.exe --cli open                 # 打开站点
-CG 项目管理器.exe --cli all --repo E:\Github\CG   # 手动指定仓库路径
+yushu-project-management.exe --cli all                  # 构建 + 发布 + 验证（默认命令）
+yushu-project-management.exe --cli build                # 仅构建
+yushu-project-management.exe --cli publish              # 仅发布
+yushu-project-management.exe --cli open                 # 打开站点
+yushu-project-management.exe --cli all --repo E:\Github\CG   # 手动指定仓库路径
 ```
 
 - 不带 `--repo` 时从 exe 所在目录向上自动找 `.git` 仓库根
@@ -47,7 +47,7 @@ CG 项目管理器.exe --cli all --repo E:\Github\CG   # 手动指定仓库路�
 ```bash
 cmake --preset vs2022
 cmake --build build/vs2022 --config Release
-cp build/vs2022/Release/CG 项目管理器.exe tools/
+cp build/vs2022/Release/yushu-project-management.exe tools/
 ```
 
 - FTXUI 由 FetchContent 在 configure 时自动下载，无需手动安装

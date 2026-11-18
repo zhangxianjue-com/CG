@@ -31,4 +31,4 @@ title: CG · 图形学学习笔记
 
 ## 关于发布器
 
-`tools/CG 项目管理器.exe` 是一个本地终端小工具：一键完成「VitePress 构建 + 产物铺到 docs/ 并推送」，详见[工具文档](/tools/publisher)。GitHub Pages 直接部署 main 分支的 `docs/` 文件夹，推送后约 1 分钟自动生效。
+`tools/yushu-project-management.exe` 是一个本地终端小工具：一键完成「VitePress 构建 + 产物铺到 docs/ 并推送」，详见[工具文档](/tools/publisher)。GitHub Pages 直接部署 main 分支的 `docs/` 文件夹，推送后约 1 分钟自动生效。
