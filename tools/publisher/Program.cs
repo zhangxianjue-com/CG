@@ -183,14 +183,21 @@ internal sealed class PublishEngine
             Err("构建产物不存在，请先构建站点");
             return false;
         }
+        // 保证 .nojekyll 存在：否则 GitHub Pages 会用 Jekyll 构建并排除点开头目录，.vitepress 无法访问、站点 404
+        var nojekyll = Path.Combine(repoRoot, ".nojekyll");
+        if (!File.Exists(nojekyll))
+        {
+            File.WriteAllText(nojekyll, "");
+            Info("→ 已创建 .nojekyll（跳过 Jekyll，确保 .vitepress 目录可访问）");
+        }
         Info("→ 拉取远端更新（git pull --rebase origin main）");
         if (!await RunAsync(repoRoot, "git pull --rebase origin main"))
         {
             Err("拉取失败：如有未提交的修改请先处理，然后重试");
             return false;
         }
-        Info("→ 暂存构建产物（git add -f docs/.vitepress/dist）");
-        if (!await RunAsync(repoRoot, "git add -f docs/.vitepress/dist")) return false;
+        Info("→ 暂存构建产物（git add -f docs/.vitepress/dist .nojekyll）");
+        if (!await RunAsync(repoRoot, "git add -f docs/.vitepress/dist .nojekyll")) return false;
 
         var hasChanges = await CaptureAsync(repoRoot, "git diff --cached --quiet && echo YES || echo NO");
         if (hasChanges?.Trim() == "YES")
