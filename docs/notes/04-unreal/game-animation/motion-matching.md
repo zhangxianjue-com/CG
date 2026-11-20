@@ -2,6 +2,8 @@
 title: "Motion Matching 运行匹配"
 ---
 
+> Motion Matching 运行匹配，一套数据驱动的下一代动画系统，用于【取代传统复杂的状态机】，让角色移动动画（如走、跑、转身）更加自然流畅，并大幅减少手动配置动画过渡的工作量。
+
 # Overview 总览
 
 ```md
@@ -45,7 +47,6 @@ title: "Motion Matching 运行匹配"
 
    ::: details 查看答案
    以官方《游戏动画示例》(Game Animation Sample) 项目为例，按下面步骤一步一步来（UE 5.4+，截图来自 Epic 官方文档）：
-
    1. **启用 Motion Matching 插件**
 
       Edit → Plugins 里搜索 Motion Matching，勾选启用后重启编辑器。

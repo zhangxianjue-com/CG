@@ -53,9 +53,9 @@ build/vs2022/Release/glm_demo.exe
 - 发布器以 `user.name=CGPublish` 身份提交（`deploy: CG 笔记站点 <时间>`），不要用个人身份发 deploy 提交
 - Claude Code 的 git 提交信息结尾加 `Co-Authored-By: Claude Code <noreply@anthropic.com>`
 - 用户是中文使用者，回复和文档用中文
-- md 笔记按统一模板写：标题中英双语、英文在前（如 `# Overview 知识体系`、`# FAQ 常见问题`）；
-  - > 一句话概述
-  - Overview 用 ```md 代码块画目录树/结构图；
-  - FAQ 用有序列表列问题
-  - 整个 md 文档由这三个部分组成
+- md 笔记按统一模板写，页面由四部分组成（示例：`docs/notes/04-unreal/game-animation/motion-matching.md`）：
+  1. frontmatter 写 `title`（页面不写 H1 标题）
+  2. `> 一句话概述`：一句话概括整页内容
+  3. `# Overview 总览`：用 ```md 代码块画目录树（目录名带 `/`，├── │ └── 多层嵌套），配图放树之后
+  4. `# FAQ 常见问题`：有序列表列问题（问题以？结尾独占一行），答案缩进写在问题下方、用 `::: details 查看答案` 折叠块包裹；答案里可配图、可嵌套有序列表分步
 - `test*.text` 是用户个人临时文件（已 gitignore），`test1.md` 等未跟踪文件不要动
