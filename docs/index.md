@@ -18,8 +18,7 @@ CG/
 ├── demos/
 │   └── phase1-GLM/
 └── tools/
-    ├── publisher-cpp/
-    └── yushu-markdown/
+    └── publisher-cpp/
 ```
 
 # FAQ 常见问题
