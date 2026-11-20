@@ -28,11 +28,9 @@ docs/assets/
 docs/hashmap.json
 docs/diagrams/
 docs/notes/**/*.html
-docs/notes/**/*.excalidraw
 
-# 笔记发布器构建产物
-tools/publisher/bin/
-tools/publisher/obj/
+# 项目管理器构建产物
+tools/publisher-cpp/build/
 
 # 个人临时文件（不入库、不发布）
 test*.text
