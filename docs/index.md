@@ -2,33 +2,48 @@
 title: CG · 图形学学习笔记
 ---
 
-# CG · 图形学学习笔记
+# Overview 总览
 
-从零重新学习计算机图形学：一边记笔记，一边写 demo，最终沉淀出一个小型渲染引擎。
+```md
+CG/
+├── docs/
+│   ├── notes/
+│   │   ├── 01-cpp/
+│   │   ├── 02-math/
+│   │   ├── 03-renderer/
+│   │   └── 04-unreal/
+│   ├── public/diagrams/
+│   ├── scripts/
+│   └── .vitepress/
+├── demos/
+│   └── phase1-GLM/
+└── tools/
+    ├── publisher-cpp/
+    └── yushu-markdown/
+```
 
-> 📌 本站直接在 `docs/` 里维护：页面是 Markdown，配图是 SVG。
+# FAQ 常见问题
 
-## 快速入口
+1. 这个项目是做什么的？
 
-- 🗺️ [学习路线图](/notes/roadmap) — 四阶段路线图与进度看板
-- ➗ [数学基础](/notes/02-math/vector-matrix) — 向量与矩阵、坐标系
-- 🖥️ [渲染器原理](/notes/03-renderer/renderer) — 渲染是什么、渲染器架构
+   从零重新学习计算机图形学：一边记笔记，一边写 demo，最终沉淀出一个小型渲染引擎。
 
-## 学习路线
+2. 学习路线分几个阶段？
 
-| 阶段 | 内容 | 参考资料 |
-|---|---|---|
-| 0 | C++ 与数学基础 | 自写数学库 |
-| 1 | CPU 光线追踪 | [Ray Tracing in One Weekend](https://raytracing.github.io/) 三部曲 |
-| 2 | 软件光栅化 | [tinyrenderer](https://github.com/ssloy/tinyrenderer) |
-| 3 | GPU 实时渲染 | [learnopengl.com](https://learnopengl.com/) |
-| 4 | 引擎整合与进阶 | — |
+   5 个：0 C++ 与数学基础 → 1 CPU 光线追踪（RT in One Weekend 三部曲）→ 2 软件光栅化（tinyrenderer）→ 3 GPU 实时渲染（learnopengl）→ 4 引擎整合与进阶。
 
-## 笔记工作流
+3. 笔记写在哪里？
 
-1. 在 `docs/notes/` 里直接维护 Markdown 页面，配图 SVG 放 `docs/public/diagrams/`
-2. 打开桌面端发布器，点「一键构建并发布」——构建产物自动铺到 `docs/` 并推送到 GitHub Pages
+   全部 Markdown 直接维护在 docs/notes/；构建产物提交进仓库，GitHub Pages 直接部署 main 分支的 /docs 文件夹。
 
-## 关于发布器
+4. 配图 SVG 放在哪里？
 
-`tools/yushu-project-management.exe` 是一个本地终端小工具：一键完成「VitePress 构建 + 产物铺到 docs/ 并推送」，详见[工具文档](/tools/publisher)。GitHub Pages 直接部署 main 分支的 `docs/` 文件夹，推送后约 1 分钟自动生效。
+   docs/public/diagrams/，页面里用普通 md 图片语法引用。
+
+5. 怎么发布到线上？
+
+   桌面发布器 tools/yushu-project-management.exe「一键构建并发布」，或 npm run docs:build 手动铺产物；推送后约 1 分钟自动生效。
+
+6. 渲染引擎最后要做成什么样？
+
+   双后端对照渲染：同一份场景，光栅化与光线追踪两种实现互相对照验证。

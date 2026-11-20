@@ -40,6 +40,17 @@ export default defineConfig({
         ],
       },
       {
+        text: 'Unreal Engine 游戏引擎',
+        items: [
+          {
+            text: 'Game Animation 游戏动画',
+            items: [
+              { text: 'Motion Matching 运行匹配', link: '/notes/04-unreal/game-animation/motion-matching' },
+            ],
+          },
+        ],
+      },
+      {
         text: '工具',
         items: [{ text: 'yushu-project-management', link: '/tools/publisher' }],
       },
