@@ -56,6 +56,6 @@ build/vs2022/Release/glm_demo.exe
 - md 笔记按统一模板写，页面由四部分组成（示例：`docs/notes/04-unreal/game-animation/motion-matching.md`）：
   1. frontmatter 写 `title`（页面不写 H1 标题）
   2. `> 一句话概述`：一句话概括整页内容
-  3. `# Overview 总览`：用 ```md 代码块画目录树（目录名带 `/`，├── │ └── 多层嵌套），配图放树之后
+  3. `# Overview 知识体系`：用 ```md 代码块画目录树（目录名带 `/`，├── │ └── 多层嵌套），配图放树之后
   4. `# FAQ 常见问题`：有序列表列问题（问题以？结尾独占一行），答案缩进写在问题下方、用 `::: details 查看答案` 折叠块包裹；答案里可配图、可嵌套有序列表分步
 - `test*.text` 是用户个人临时文件（已 gitignore），`test1.md` 等未跟踪文件不要动
