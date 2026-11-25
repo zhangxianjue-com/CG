@@ -159,7 +159,7 @@ int TuiMain() {
             std::lock_guard<std::mutex> lk(st->mu);
             st->siteUrl = SiteUrl(p->first, p->second);
           }
-          doLog(VerifyAsync(p->first, p->second), false);
+          doLog(VerifyAsync(p->first, p->second, repo), false);
         }
       }
       setDone(ok, "发布完成");

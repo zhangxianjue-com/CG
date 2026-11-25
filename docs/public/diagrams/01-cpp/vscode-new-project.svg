@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" width="720" height="300">
+  <rect width="720" height="300" fill="#ffffff"/>
+  <text x="24" y="38" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="20" font-weight="600" fill="#343a40">② 创建项目：文件夹就是项目</text>
+
+  <!-- 左侧：资源管理器 -->
+  <rect x="24" y="66" width="300" height="180" rx="8" fill="#1e1e1e"/>
+  <text x="40" y="92" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="12" fill="#868e96">资源管理器</text>
+  <line x1="24" y1="102" x2="324" y2="102" stroke="#3c3c3c"/>
+  <rect x="36" y="114" width="14" height="12" rx="2" fill="#dcb67a"/>
+  <text x="58" y="125" font-family="Consolas, monospace" font-size="13" font-weight="600" fill="#d4d4d4">HELLO-CPP</text>
+  <rect x="58" y="138" width="14" height="12" rx="2" fill="#c5c5c5"/>
+  <text x="80" y="149" font-family="Consolas, monospace" font-size="13" fill="#d4d4d4">main.cpp</text>
+  <text x="80" y="176" font-family="Consolas, monospace" font-size="12" fill="#868e96">  main()</text>
+  <text x="36" y="216" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="12" fill="#6a9955">// 新文件出现在资源管理器里</text>
+
+  <!-- 右侧：三步 -->
+  <rect x="340" y="66" width="356" height="180" rx="8" fill="#f8f9fa" stroke="#dee2e6"/>
+  <text x="356" y="94" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="15" font-weight="600" fill="#495057">没有项目模板，三步建好</text>
+  <text x="356" y="126" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="14" fill="#343a40">1. 新建文件夹 hello-cpp</text>
+  <text x="356" y="154" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="14" fill="#343a40">2. 菜单 File → Open Folder 打开它</text>
+  <text x="356" y="182" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="14" fill="#343a40">3. 资源管理器点「新建文件」→ main.cpp</text>
+  <text x="356" y="216" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="13" fill="#868e96">（VS 的 .sln / .vcxproj 这里都没有）</text>
+
+  <text x="24" y="280" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="13" fill="#868e96">VS Code 以「文件夹」为项目单位，打开哪个文件夹，就编辑哪个项目</text>
+</svg>

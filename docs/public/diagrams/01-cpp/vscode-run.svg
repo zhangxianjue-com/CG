@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" width="720" height="300">
+  <rect width="720" height="300" fill="#ffffff"/>
+  <text x="24" y="38" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="20" font-weight="600" fill="#343a40">④ 运行代码：集成终端里编译运行</text>
+
+  <!-- 集成终端 -->
+  <rect x="24" y="66" width="672" height="190" rx="8" fill="#1e1e1e"/>
+  <text x="40" y="92" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="12" fill="#868e96">终端</text>
+  <line x1="24" y1="102" x2="696" y2="102" stroke="#3c3c3c"/>
+  <text x="40" y="130" font-family="Consolas, monospace" font-size="14" fill="#d4d4d4">PS E:\hello-cpp&gt; </text>
+  <text x="200" y="130" font-family="Consolas, monospace" font-size="14" fill="#dcdcaa">cl /EHsc main.cpp</text>
+  <text x="40" y="158" font-family="Consolas, monospace" font-size="13" fill="#868e96">main.cpp</text>
+  <text x="40" y="186" font-family="Consolas, monospace" font-size="14" fill="#d4d4d4">PS E:\hello-cpp&gt; </text>
+  <text x="200" y="186" font-family="Consolas, monospace" font-size="14" fill="#dcdcaa">main.exe</text>
+  <text x="40" y="214" font-family="Consolas, monospace" font-size="14" fill="#12b886">Hello CG!</text>
+
+  <!-- 底部徽章 -->
+  <rect x="24" y="266" width="196" height="26" rx="13" fill="#e7f5ff"/>
+  <text x="122" y="284" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="13" fill="#1971c2" text-anchor="middle">Ctrl+` 打开集成终端</text>
+  <rect x="232" y="266" width="270" height="26" rx="13" fill="#e7f5ff"/>
+  <text x="367" y="284" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="13" fill="#1971c2" text-anchor="middle">或装 Code Runner 点 ▶ 一键运行</text>
+</svg>

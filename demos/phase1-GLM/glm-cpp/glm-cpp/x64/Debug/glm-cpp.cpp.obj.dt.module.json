@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "glm-cpp\\x64\\Debug\\glm-cpp.obj",
+            "outputs": [
+                "glm-cpp\\x64\\Debug\\glm-cpp.cpp.obj.dt.module.json",
+                "glm-cpp\\x64\\Debug\\glm-cpp.cpp.obj.dt.d.json"
+            ],
+            "requires": []
+        }
+    ]
+}

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" width="720" height="300">
+  <rect width="720" height="300" fill="#ffffff"/>
+  <text x="24" y="38" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="20" font-weight="600" fill="#343a40">② 创建项目：控制台应用（C++）</text>
+
+  <!-- 第一步：启动窗口 -->
+  <rect x="24" y="66" width="170" height="180" rx="8" fill="#f8f9fa" stroke="#dee2e6"/>
+  <text x="40" y="96" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="15" font-weight="600" fill="#495057">启动窗口</text>
+  <rect x="40" y="112" width="138" height="34" rx="6" fill="#e7f5ff" stroke="#1971c2"/>
+  <text x="109" y="134" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="14" font-weight="600" fill="#1971c2" text-anchor="middle">创建新项目</text>
+  <text x="40" y="178" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="13" fill="#868e96">或「打开项目」</text>
+  <text x="40" y="202" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="13" fill="#868e96">继续编辑已有工程</text>
+
+  <!-- 箭头 1 -->
+  <line x1="204" y1="156" x2="236" y2="156" stroke="#868e96" stroke-width="2"/>
+  <polygon points="236,150 246,156 236,162" fill="#868e96"/>
+
+  <!-- 第二步：模板选择 -->
+  <rect x="252" y="66" width="200" height="180" rx="8" fill="#f8f9fa" stroke="#dee2e6"/>
+  <text x="268" y="96" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="15" font-weight="600" fill="#495057">模板选择</text>
+  <rect x="264" y="112" width="176" height="34" rx="6" fill="#e7f5ff" stroke="#1971c2"/>
+  <text x="352" y="134" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="14" font-weight="600" fill="#1971c2" text-anchor="middle">控制台应用</text>
+  <text x="268" y="178" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="13" fill="#495057">语言：C++</text>
+  <text x="268" y="202" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="13" fill="#495057">平台：Windows</text>
+  <text x="268" y="226" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="13" fill="#495057">（不选空项目）</text>
+
+  <!-- 箭头 2 -->
+  <line x1="462" y1="156" x2="494" y2="156" stroke="#868e96" stroke-width="2"/>
+  <polygon points="494,150 504,156 494,162" fill="#868e96"/>
+
+  <!-- 第三步：配置项目 -->
+  <rect x="510" y="66" width="186" height="180" rx="8" fill="#f8f9fa" stroke="#dee2e6"/>
+  <text x="526" y="96" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="15" font-weight="600" fill="#495057">配置项目</text>
+  <text x="526" y="128" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="13" fill="#495057">项目名称：hello-cpp</text>
+  <text x="526" y="152" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="13" fill="#495057">位置：E:\Github\CG\demos</text>
+  <rect x="526" y="206" width="70" height="30" rx="6" fill="#1971c2"/>
+  <text x="561" y="226" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="14" font-weight="600" fill="#ffffff" text-anchor="middle">创建</text>
+
+  <text x="24" y="280" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="13" fill="#868e96">创建后得到 main.cpp + 解决方案 .sln（以后双击 .sln 即可重新打开整个项目）</text>
+</svg>

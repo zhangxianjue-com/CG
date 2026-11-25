@@ -31,7 +31,13 @@ export default defineConfig({
           {
             text: "CPP 编程语言",
             items: [
-              { text: "Visual Studio 编辑器", link: "/notes/01-cpp/visual-studio" },
+              {
+                text: "代码编辑器",
+                items: [
+                  { text: "Visual Studio 编辑器", link: "/notes/01-cpp/visual-studio" },
+                  { text: "VS Code 编辑器", link: "/notes/01-cpp/vs-code" },
+                ],
+              },
               { text: "数据类型", link: "/notes/01-cpp/data-types" },
               { text: "面向对象编码", link: "/notes/01-cpp/oop" },
               { text: "GLM 数学库", link: "/notes/01-cpp/glm" },

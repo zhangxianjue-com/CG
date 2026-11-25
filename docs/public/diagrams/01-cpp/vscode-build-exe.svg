@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" width="720" height="300">
+  <rect width="720" height="300" fill="#ffffff"/>
+  <text x="24" y="38" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="20" font-weight="600" fill="#343a40">⑤ 输出 .exe：编译产物 main.exe</text>
+
+  <!-- 左侧：资源管理器里的产物 -->
+  <rect x="24" y="66" width="280" height="180" rx="8" fill="#1e1e1e"/>
+  <text x="40" y="92" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="12" fill="#868e96">资源管理器</text>
+  <line x1="24" y1="102" x2="304" y2="102" stroke="#3c3c3c"/>
+  <rect x="36" y="114" width="14" height="12" rx="2" fill="#dcb67a"/>
+  <text x="58" y="125" font-family="Consolas, monospace" font-size="13" font-weight="600" fill="#d4d4d4">HELLO-CPP</text>
+  <rect x="58" y="138" width="14" height="12" rx="2" fill="#c5c5c5"/>
+  <text x="80" y="149" font-family="Consolas, monospace" font-size="13" fill="#d4d4d4">main.cpp</text>
+  <rect x="58" y="160" width="130" height="20" rx="4" fill="#252526" stroke="#1971c2"/>
+  <rect x="66" y="166" width="12" height="8" rx="2" fill="#4fc1ff"/>
+  <text x="84" y="175" font-family="Consolas, monospace" font-size="13" fill="#ffffff">main.exe</text>
+  <text x="58" y="206" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="12" fill="#6a9955">// 编译后自动出现在文件夹里</text>
+
+  <!-- 右侧：说明 -->
+  <rect x="320" y="66" width="376" height="180" rx="8" fill="#e7f5ff" stroke="#1971c2"/>
+  <text x="336" y="96" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="15" font-weight="600" fill="#1971c2">cl 默认输出与源文件同名的 .exe</text>
+  <text x="336" y="130" font-family="Consolas, monospace" font-size="14" fill="#343a40">cl /EHsc main.cpp</text>
+  <text x="336" y="152" font-family="Consolas, monospace" font-size="14" fill="#343a40">  → main.exe</text>
+  <text x="336" y="184" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="13" fill="#495057">改名编译：</text>
+  <text x="336" y="204" font-family="Consolas, monospace" font-size="13" fill="#343a40">cl /EHsc /Fe:app.exe main.cpp</text>
+  <text x="336" y="232" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="13" fill="#495057">双击 main.exe 即可运行，不依赖 IDE</text>
+</svg>

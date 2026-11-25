@@ -4,7 +4,7 @@ title: yushu-project-management
 
 > 自研的 C++ 发布器（FTXUI TUI + CLI）：一键构建 VitePress 站点并把 dist 产物推送到 gh-pages 分支，main 分支只保留源文件。
 
-# Overview 总览
+# Markmap 知识体系
 
 ```md
 yushu-project-management/
@@ -15,7 +15,7 @@ yushu-project-management/
 │   └── tui.cpp（FTXUI 终端界面）
 ├── 使用/
 │   ├── TUI 终端界面
-│   └── --cli [build|publish|all|open]
+│   └── --cli [build|publish|all|verify|open]
 ├── 构建流程/
 │   ├── npm run docs:build
 │   └── 产物在 .vitepress/dist（含 .nojekyll）
@@ -25,7 +25,8 @@ yushu-project-management/
 │   ├── commit-tree 生成孤儿提交（CGPublish 身份）
 │   └── push <提交>:gh-pages --force（不碰 main/用户 index）
 └── 验证/
-    └── WinHTTP 200
+    ├── WinHTTP 200
+    └── 对比线上 hashmap.json 判断内容是否最新
 ```
 
 # FAQ 常见问题
@@ -33,7 +34,7 @@ yushu-project-management/
 1. 一键构建并发布做了哪几步？
 
    ::: details 查看答案
-   构建（npm run docs:build，产物在 .vitepress/dist）→ 发布（用独立临时 index 把 dist 写成根目录树 → 孤儿提交 → 强推 gh-pages，站点文件位于分支根目录）→ 验证（HTTP GET 返回 200 即部署生效）。
+   构建（npm run docs:build，产物在 .vitepress/dist）→ 发布（用独立临时 index 把 dist 写成根目录树 → 孤儿提交 → 强推 gh-pages，站点文件位于分支根目录）→ 验证（HTTP GET 返回 200，且对比线上 hashmap.json 与本地产物的页面哈希清单，不一致会警告"线上内容未更新"并提示排查 Pages Source 设置）。
    :::
 
 2. 为什么不能把 VitePress outDir 直接设为 docs/？

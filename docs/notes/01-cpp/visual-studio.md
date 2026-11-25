@@ -4,13 +4,21 @@ title: "Visual Studio 编辑器"
 
 > Visual Studio 是 Windows 上的主力 C++ 开发环境 IDE，除了有点重，没啥缺点。
 
-# Overview 总览
+# Markmap 知识体系
 
-```md
-Visual Studio 编辑器
-├── Visual Studio Installer
-│ └── 下载: https://visualstudio.microsoft.com/zh-hans/downloads/
-├── Visual Studio Studio
+```
+Visual Studio Installer（安装管理器，本体固定 C 盘）
+├── 下载: https://visualstudio.microsoft.com/zh-hans/downloads/
+├── Visual Studio（IDE 集成开发环境）
+│   ├── 代码编辑器
+│   ├── 调试器
+│   ├── 工程管理
+│   ├── 构建系统
+│   ├── Git 集成
+│   └── 性能分析工具
+├── Workload 工作负载（按“开发场景”打包好的一组组件集合）
+│   ├── 配置 C++ 桌面开发环境
+│   └──  …
 └── END
 ```
 
@@ -26,15 +34,47 @@ Visual Studio 编辑器
 
    :::
 
-2. 安装 C++ 开发环境时，需要勾选哪些组件？
+2. IDE 集成开发环境与 VS Code 代码编辑器有什么区别？
 
    ::: details 查看答案
-   核心只勾一个工作负载：**「使用 C++ 的桌面开发」**。
+   区别在「集成度」：IDE 把编辑、调试、构建、工程管理做成一个整体，开箱即用；代码编辑器只负责"编辑"，其余能力靠插件拼装。
 
-   右侧「安装详细信息」默认包含（不够再说）：
-   1. MSVC v143 编译器工具集
-   2. Windows SDK
-   3. 适用于 Windows 的 C++ CMake 工具
+   | 维度 | IDE（Visual Studio、CLion）          | 代码编辑器（VS Code）       |
+   | ---- | ------------------------------------ | --------------------------- |
+   | 定位 | 一站式开发环境                       | 轻量编辑器 + 插件生态       |
+   | 调试 | 内置调试器，断点/单步/看内存开箱即用 | 靠扩展实现（如 C/C++ 扩展） |
+   | 构建 | 内置工程系统（MSBuild / CMake 集成） | 靠插件 + 外部工具链         |
+   | 体量 | 重（几 GB 起）                       | 轻（几百 MB）               |
+   | 适用 | Windows 平台主力 C++/C# 开发         | 跨平台、多语言、远程/嵌入式 |
 
-   安装位置默认 C 盘即可；磁盘紧张时「安装位置」可改到其他盘，但只能省下主 IDE + 工作负载的体积——Installer 本体、.NET SDK、部分 Windows SDK/运行时组件仍固定装在 C 盘。
+   补充：
+   1. VS Code 装 C/C++ 扩展 + CMake 扩展后，同样能调 MSVC 编译、断点调试，体验接近 IDE，所以两者能力边界越来越模糊
+   2. 真正的区别是「默认集成 vs 按需拼装」：IDE 拿到手就能干活，编辑器要自己搭；代价是 IDE 重、编辑器轻
+   3. 两者编辑器窗口本质是同一套技术（VS 2022 起与 VS Code 共享编辑器内核），所以长得像、补全行为像
+
    :::
+
+3. 如何配置 C++ 桌面开发环境？
+
+   ::: details 查看答案
+   从零到跑出第一个 `.exe` 共五步：**安装环境 → 创建项目 → 编写代码 → 运行代码 → 输出 .exe**。
+   1. **① 安装环境**：运行 VS Installer，勾选工作负载「使用 C++ 的桌面开发」，右侧「安装详细信息」默认带 MSVC 工具集、Windows SDK、CMake 工具，点「安装」。安装位置默认 C 盘即可（磁盘紧张可改「安装位置」，但 Installer 本体、.NET SDK、部分 SDK/运行时仍固定在 C 盘）。
+
+      ![VS Installer 勾选工作负载](/diagrams/01-cpp/vs-install.svg)
+
+   2. **② 创建项目**：打开 VS →「创建新项目」→ 模板选「控制台应用」→ 填项目名称与位置 →「创建」，得到 `main.cpp` 与解决方案 `.sln`（以后双击 .sln 即可重新打开项目）。
+
+      ![创建控制台应用项目](/diagrams/01-cpp/vs-new-project.svg)
+
+   3. **③ 编写代码**：在 `main.cpp` 里写第一个程序，`std::cout` 会把内容打印到控制台窗口。
+
+      ![编写 main.cpp](/diagrams/01-cpp/vs-write-code.svg)
+
+   4. **④ 运行代码**：`Ctrl+F5`「开始执行（不调试）」，控制台窗口看到打印输出。
+
+      ![运行代码，控制台看打印输出](/diagrams/01-cpp/vs-run.svg)
+
+   5. **⑤ 输出 .exe**：菜单「生成 → 生成解决方案」（Ctrl+Shift+B），产物在 `项目名\x64\Debug\项目名.exe`，双击即可运行。窗口一闪而过的话，用 Ctrl+F5「开始执行（不调试）」。
+
+      ![生成 exe 并运行](/diagrams/01-cpp/vs-build-exe.svg)
+      :::

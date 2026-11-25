@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" width="720" height="300">
+  <rect width="720" height="300" fill="#ffffff"/>
+  <text x="24" y="38" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="20" font-weight="600" fill="#343a40">⑤ 输出 .exe：生成解决方案</text>
+
+  <!-- 工具栏 -->
+  <rect x="24" y="66" width="672" height="42" rx="8" fill="#f1f3f5" stroke="#dee2e6"/>
+  <text x="40" y="93" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="14" font-weight="600" fill="#343a40">生成</text>
+  <line x1="40" y1="100" x2="76" y2="100" stroke="#1971c2" stroke-width="2"/>
+  <rect x="104" y="75" width="80" height="24" rx="4" fill="#ffffff" stroke="#adb5bd"/>
+  <text x="118" y="92" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="13" fill="#495057">Debug</text>
+  <rect x="194" y="75" width="80" height="24" rx="4" fill="#ffffff" stroke="#adb5bd"/>
+  <text x="208" y="92" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="13" fill="#495057">x64</text>
+  <rect x="300" y="75" width="180" height="24" rx="4" fill="#ffffff" stroke="#adb5bd"/>
+  <polygon points="314,82 322,87 314,92" fill="#12b886"/>
+  <text x="332" y="92" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="13" fill="#495057">本地 Windows 调试器</text>
+
+  <!-- 左侧：生成菜单 -->
+  <rect x="24" y="128" width="280" height="130" rx="8" fill="#f8f9fa" stroke="#dee2e6"/>
+  <text x="40" y="158" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="15" font-weight="600" fill="#495057">菜单：生成 → 生成解决方案</text>
+  <rect x="40" y="174" width="196" height="26" rx="6" fill="#e7f5ff" stroke="#1971c2"/>
+  <text x="48" y="192" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="13" fill="#1971c2">Ctrl+Shift+B 快捷键</text>
+  <text x="40" y="226" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="13" fill="#495057">输出窗口显示</text>
+  <text x="40" y="246" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="13" fill="#12b886">========== 生成: 成功 ==========</text>
+
+  <!-- 箭头 -->
+  <line x1="312" y1="193" x2="330" y2="193" stroke="#868e96" stroke-width="2"/>
+  <polygon points="330,187 340,193 330,199" fill="#868e96"/>
+
+  <!-- 右侧：exe 产物 -->
+  <rect x="348" y="128" width="348" height="130" rx="8" fill="#e7f5ff" stroke="#1971c2"/>
+  <text x="364" y="158" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="15" font-weight="600" fill="#1971c2">产物路径</text>
+  <text x="364" y="188" font-family="Consolas, monospace" font-size="14" fill="#343a40">hello-cpp\x64\Debug\hello-cpp.exe</text>
+  <text x="364" y="218" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="13" fill="#495057">双击 exe 即可运行</text>
+  <text x="364" y="240" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="13" fill="#e8590c">窗口一闪而过？用 Ctrl+F5「开始执行（不调试）」</text>
+</svg>

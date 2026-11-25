@@ -15,6 +15,8 @@ std::string ToUtf8(const std::wstring& w);
 std::wstring ToWide(const std::string& s);
 std::string ExeDir();
 std::string FindRepoRoot(const std::string& start);
+// 盘符大写化（小写盘符 cwd 下 VitePress 构建报 imports TypeError）
+std::string NormalizeDrive(std::string p);
 std::string DocsDir(const std::string& repoRoot);
 std::string DistDir(const std::string& repoRoot);
 
@@ -33,6 +35,7 @@ std::string SiteUrl(const std::string& owner, const std::string& repo);
 // 构建 / 发布 / 验证（对应原 C# PublishEngine）
 bool BuildAsync(const std::string& repoRoot, const LogFn& log);
 bool PublishAsync(const std::string& repoRoot, const LogFn& log);
-std::string VerifyAsync(const std::string& owner, const std::string& repo);
+std::string VerifyAsync(const std::string& owner, const std::string& repo,
+                        const std::string& repoRoot);
 
 }  // namespace cgpublish

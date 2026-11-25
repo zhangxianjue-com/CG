@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" width="720" height="320">
+  <rect width="720" height="320" fill="#ffffff"/>
+  <text x="24" y="38" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="20" font-weight="600" fill="#343a40">① 安装环境：VS Code + C++ 扩展 + 复用 MSVC 工具集</text>
+
+  <!-- 左侧：VS Code 扩展视图 -->
+  <rect x="24" y="66" width="330" height="196" rx="8" fill="#1e1e1e"/>
+  <rect x="24" y="66" width="40" height="196" rx="8" fill="#333333"/>
+  <rect x="36" y="86" width="16" height="16" rx="3" fill="#858585"/>
+  <rect x="36" y="118" width="16" height="16" rx="3" fill="#858585"/>
+  <rect x="36" y="150" width="16" height="16" rx="3" fill="#858585"/>
+  <rect x="74" y="76" width="270" height="28" rx="4" fill="#3c3c3c"/>
+  <text x="86" y="95" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="13" fill="#868e96">搜索扩展：C++</text>
+  <rect x="74" y="116" width="270" height="62" rx="6" fill="#252526" stroke="#1971c2"/>
+  <text x="88" y="140" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="14" font-weight="600" fill="#ffffff">C/C++</text>
+  <text x="88" y="162" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="12" fill="#868e96">Microsoft · 智能补全与调试</text>
+  <rect x="252" y="128" width="82" height="26" rx="4" fill="#1971c2"/>
+  <text x="293" y="146" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">安装</text>
+  <text x="74" y="206" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="12" fill="#6a9955">// 扩展市场 → 搜 C/C++ → 安装</text>
+  <text x="74" y="228" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="12" fill="#6a9955">// 提供 IntelliSense 智能补全</text>
+
+  <!-- 右侧：开发者命令提示符 -->
+  <rect x="370" y="66" width="326" height="196" rx="8" fill="#1e1e1e"/>
+  <text x="386" y="92" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="12" fill="#868e96">Developer Command Prompt for VS 2026</text>
+  <line x1="370" y1="102" x2="696" y2="102" stroke="#3c3c3c"/>
+  <text x="386" y="128" font-family="Consolas, monospace" font-size="13" fill="#d4d4d4">C:\&gt; code</text>
+  <text x="386" y="154" font-family="Consolas, monospace" font-size="12" fill="#6a9955"># 用 code 启动 VS Code，</text>
+  <text x="386" y="174" font-family="Consolas, monospace" font-size="12" fill="#6a9955"># 终端里就能直接用 cl 编译</text>
+  <text x="386" y="208" font-family="Consolas, monospace" font-size="12" fill="#868e96">&gt; where cl</text>
+  <text x="386" y="228" font-family="Consolas, monospace" font-size="12" fill="#868e96">D:\Apps\VS\App\...\cl.exe（MSVC）</text>
+
+  <!-- 底部说明 -->
+  <rect x="24" y="278" width="250" height="26" rx="13" fill="#e7f5ff"/>
+  <text x="149" y="296" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="13" fill="#1971c2" text-anchor="middle">VS Code 不自带编译器</text>
+  <text x="290" y="296" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="13" fill="#868e96">编译器来自已装的 VS 2026（MSVC 工具集）</text>
+</svg>

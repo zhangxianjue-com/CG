@@ -50,11 +50,19 @@ std::string ExeDir() {
 // C++20 里 path::u8string() 返回 std::u8string（char8_t），这里统一转成 UTF-8 的 std::string
 std::string PathToUtf8(const fs::path& p) { return ToUtf8(p.wstring()); }
 
+// 盘符大写化：小写盘符 cwd（如 e:\...）下 VitePress 构建会报 imports TypeError，
+// 统一成 E:\ 再交给 npm/cmake，规避这个坑。
+std::string NormalizeDrive(std::string p) {
+  if (p.size() >= 2 && p[1] == ':' && p[0] >= 'a' && p[0] <= 'z')
+    p[0] = (char)(p[0] - 'a' + 'A');
+  return p;
+}
+
 std::string FindRepoRoot(const std::string& start) {
   fs::path d = start.empty() ? fs::current_path() : fs::u8path(start);
   if (!d.is_absolute()) d = fs::absolute(d);
   while (!d.empty()) {
-    if (fs::exists(d / ".git")) return PathToUtf8(d);
+    if (fs::exists(d / ".git")) return NormalizeDrive(PathToUtf8(d));
     fs::path parent = d.parent_path();
     if (parent == d) break;
     d = parent;
@@ -258,7 +266,8 @@ std::string SiteUrl(const std::string& owner, const std::string& repo) {
 // ---------- 构建 ----------
 
 bool BuildAsync(const std::string& repoRoot, const LogFn& log) {
-  std::string docs = DocsDir(repoRoot);
+  std::string root = NormalizeDrive(repoRoot);
+  std::string docs = DocsDir(root);
   if (!fs::is_directory(fs::u8path(docs))) {
     if (log) log("找不到 docs 目录：" + docs, true);
     return false;
@@ -280,7 +289,7 @@ bool BuildAsync(const std::string& repoRoot, const LogFn& log) {
     if (log) log("站点构建失败", true);
     return false;
   }
-  if (log) log("✓ 构建完成：" + DistDir(repoRoot), false);
+  if (log) log("✓ 构建完成：" + DistDir(root), false);
   return true;
 }
 
@@ -336,7 +345,8 @@ std::string ToCrlf(const std::string& s) {
 }
 
 bool PublishAsync(const std::string& repoRoot, const LogFn& log) {
-  std::string dist = DistDir(repoRoot);
+  std::string root = NormalizeDrive(repoRoot);
+  std::string dist = DistDir(root);
   if (!fs::exists(fs::u8path(dist) / "index.html")) {
     if (log) log("构建产物不存在（.vitepress/dist/index.html），请先构建站点", true);
     return false;
@@ -380,8 +390,8 @@ bool PublishAsync(const std::string& repoRoot, const LogFn& log) {
   std::error_code ec;
   fs::remove(result, ec);
   RunCmdCode(
-      repoRoot,
-      "call \"" + PathToUtf8(bat) + "\" \"" + msg + "\" \"" + repoRoot + "\"", log);
+      root,
+      "call \"" + PathToUtf8(bat) + "\" \"" + msg + "\" \"" + root + "\"", log);
   fs::remove(bat, ec);
 
   // 读结果文件判定（不依赖 exit code：cmd 经 call/&& 复合命令调用时
@@ -420,52 +430,102 @@ bool PublishAsync(const std::string& repoRoot, const LogFn& log) {
 
 // ---------- 验证 ----------
 
-std::string VerifyAsync(const std::string& owner, const std::string& repo) {
-  std::string url = SiteUrl(owner, repo);
-  std::string host = owner + ".github.io";
-  std::string path = (repo == owner + ".github.io") ? "/" : "/" + repo + "/";
-
+// WinHTTP GET：返回状态码与响应体（最多 maxBody 字节）
+bool HttpGet(const std::wstring& host, const std::wstring& path, DWORD& status,
+             std::string& body, size_t maxBody) {
   HINTERNET hSession =
-      WinHttpOpen(L"yushu-project-management/2.0", WINHTTP_ACCESS_TYPE_DEFAULT_PROXY,
+      WinHttpOpen(L"yushu-project-management/2.1", WINHTTP_ACCESS_TYPE_DEFAULT_PROXY,
                   WINHTTP_NO_PROXY_NAME, WINHTTP_NO_PROXY_BYPASS, 0);
-  if (!hSession) return "访问失败（WinHttpOpen）：" + url;
-
-  HINTERNET hConn = WinHttpConnect(hSession, ToWide(host).c_str(),
+  if (!hSession) return false;
+  HINTERNET hConn = WinHttpConnect(hSession, host.c_str(),
                                    INTERNET_DEFAULT_HTTPS_PORT, 0);
   if (!hConn) {
     WinHttpCloseHandle(hSession);
-    return "访问失败（WinHttpConnect）：" + url;
+    return false;
   }
   HINTERNET hReq =
-      WinHttpOpenRequest(hConn, L"GET", ToWide(path).c_str(), nullptr,
+      WinHttpOpenRequest(hConn, L"GET", path.c_str(), nullptr,
                          WINHTTP_NO_REFERER, WINHTTP_DEFAULT_ACCEPT_TYPES,
                          WINHTTP_FLAG_SECURE);
-  std::string result;
   if (!hReq) {
-    result = "访问失败（WinHttpOpenRequest）：" + url;
-  } else {
-    BOOL ok = WinHttpSendRequest(hReq, WINHTTP_NO_ADDITIONAL_HEADERS, 0,
-                                 WINHTTP_NO_REQUEST_DATA, 0, 0, 0);
-    if (ok) ok = WinHttpReceiveResponse(hReq, nullptr);
-    DWORD status = 0;
-    DWORD size = sizeof(status);
-    if (ok)
-      WinHttpQueryHeaders(hReq,
-                          WINHTTP_QUERY_STATUS_CODE | WINHTTP_QUERY_FLAG_NUMBER,
-                          WINHTTP_HEADER_NAME_BY_INDEX, &status, &size,
-                          WINHTTP_NO_HEADER_INDEX);
-    if (status == 200)
-      result = "✓ 站点可访问：" + url;
-    else if (status != 0)
-      result = "站点暂时返回 HTTP " + std::to_string(status) +
-               "（Pages 部署中，约 1 分钟内生效）：" + url;
-    else
-      result = "访问失败（网络错误）：" + url;
-    WinHttpCloseHandle(hReq);
+    WinHttpCloseHandle(hConn);
+    WinHttpCloseHandle(hSession);
+    return false;
   }
+  BOOL ok = WinHttpSendRequest(hReq, WINHTTP_NO_ADDITIONAL_HEADERS, 0,
+                               WINHTTP_NO_REQUEST_DATA, 0, 0, 0);
+  if (ok) ok = WinHttpReceiveResponse(hReq, nullptr);
+  status = 0;
+  if (ok) {
+    DWORD size = sizeof(status);
+    WinHttpQueryHeaders(hReq, WINHTTP_QUERY_STATUS_CODE | WINHTTP_QUERY_FLAG_NUMBER,
+                        WINHTTP_HEADER_NAME_BY_INDEX, &status, &size,
+                        WINHTTP_NO_HEADER_INDEX);
+  }
+  body.clear();
+  if (ok && status == 200) {
+    char buf[4096];
+    DWORD read = 0;
+    while (body.size() < maxBody &&
+           WinHttpReadData(hReq, buf, sizeof(buf), &read) && read > 0)
+      body.append(buf, read);
+  }
+  WinHttpCloseHandle(hReq);
   WinHttpCloseHandle(hConn);
   WinHttpCloseHandle(hSession);
-  return result;
+  return ok && status != 0;
+}
+
+// 去首尾空白
+std::string TrimWs(std::string s) {
+  size_t a = s.find_first_not_of(" \t\r\n");
+  size_t b = s.find_last_not_of(" \t\r\n");
+  return (a == std::string::npos) ? std::string() : s.substr(a, b - a + 1);
+}
+
+std::string VerifyAsync(const std::string& owner, const std::string& repo,
+                        const std::string& repoRoot) {
+  std::string url = SiteUrl(owner, repo);
+  std::string host = owner + ".github.io";
+  std::string base = (repo == owner + ".github.io") ? "/" : "/" + repo + "/";
+  std::string root = NormalizeDrive(repoRoot);
+
+  DWORD status = 0;
+  std::string body;
+  bool reachable = HttpGet(ToWide(host), ToWide(base), status, body, 4096);
+  if (!reachable || status == 0) return "访问失败（网络错误）：" + url;
+  if (status != 200)
+    return "站点暂时返回 HTTP " + std::to_string(status) +
+           "（Pages 部署中，约 1 分钟内生效）：" + url;
+
+  // 内容新鲜度：对比线上 hashmap.json（VitePress 全页哈希表，任一笔记改动
+  // 都会改变哈希）与本地已发布产物。刚推送后 Pages 要 1~2 分钟才完成部署，
+  // 短暂不一致是正常的；持续不一致基本只有一种情况——Pages 的 Source 还指向
+  // 旧分支（main/docs），根本没在读 gh-pages 分支。
+  std::string localHashmap;
+  {
+    std::string p = PathToUtf8(fs::u8path(DistDir(root)) / "hashmap.json");
+    FILE* f = nullptr;
+    if (fopen_s(&f, p.c_str(), "rb") == 0 && f) {
+      char buf[8192];
+      size_t n = fread(buf, 1, sizeof(buf) - 1, f);
+      fclose(f);
+      buf[n] = '\0';
+      localHashmap = buf;
+    }
+  }
+  DWORD hStatus = 0;
+  std::string liveHashmap;
+  HttpGet(ToWide(host), ToWide(base + "hashmap.json"), hStatus, liveHashmap, 8192);
+  if (!localHashmap.empty() &&
+      TrimWs(localHashmap) == TrimWs(liveHashmap))
+    return "✓ 站点可访问且内容为最新发布：" + url;
+  if (!localHashmap.empty())
+    return "⚠ 站点可访问，但线上内容还没更新：刚发布的话等 1~2 分钟 Pages 部署完成即可；" \
+           "若持续如此，多半是 Pages 的 Source 还指向旧分支（main/docs），请到 " \
+           "Settings→Pages 把 Source 改为 gh-pages（根目录）：https://github.com/" +
+           owner + "/" + repo + "/settings/pages";
+  return "✓ 站点可访问：" + url + "（本地无构建产物，未比对内容版本）";
 }
 
 }  // namespace cgpublish

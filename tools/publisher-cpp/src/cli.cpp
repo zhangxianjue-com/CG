@@ -53,7 +53,18 @@ int CliMain(int argc, wchar_t** argv) {
     if (!PublishAsync(repoRoot, log)) return 1;
     auto remote = GetRemoteUrl(repoRoot);
     auto p = ParseOwnerRepo(remote);
-    if (p) std::cout << VerifyAsync(p->first, p->second) << "\n";
+    if (p) std::cout << VerifyAsync(p->first, p->second, repoRoot) << "\n";
+    return 0;
+  }
+
+  if (cmd == "verify") {
+    auto remote = GetRemoteUrl(repoRoot);
+    auto p = ParseOwnerRepo(remote);
+    if (!p) {
+      std::cout << "无法从远端地址解析 owner/repo\n";
+      return 2;
+    }
+    std::cout << VerifyAsync(p->first, p->second, repoRoot) << "\n";
     return 0;
   }
 
@@ -69,7 +80,7 @@ int CliMain(int argc, wchar_t** argv) {
     return 0;
   }
 
-  std::cout << "用法：yushu-project-management.exe --cli [build|publish|all|open] [--repo 路径]\n";
+  std::cout << "用法：yushu-project-management.exe --cli [build|publish|all|verify|open] [--repo 路径]\n";
   return 2;
 }
 

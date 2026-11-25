@@ -2,7 +2,7 @@
 title: "数据类型"
 ---
 
-# Overview 总览
+# Markmap 知识体系
 
 ```md
 数据类型/
