@@ -20,6 +20,8 @@ std::string DistDir(const std::string& repoRoot);
 
 // 命令执行（cmd.exe 包裹，UTF-8 解码输出，逐行回调）
 bool RunCmd(const std::string& workDir, const std::string& cmdline, const LogFn& log);
+int RunCmdCode(const std::string& workDir, const std::string& cmdline,
+               const LogFn& log);
 std::string CaptureCmd(const std::string& workDir, const std::string& cmdline);
 
 // Git / 站点地址

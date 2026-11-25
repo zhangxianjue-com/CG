@@ -6,6 +6,7 @@
 
 #include <chrono>
 #include <cstdio>
+#include <cstring>
 #include <ctime>
 #include <filesystem>
 #include <thread>
@@ -167,12 +168,12 @@ bool ExecImpl(const std::wstring& cmdLine, const std::string& workDir,
   if (errR) CloseHandle(errR);
 
   if (captureOut) *captureOut = std::move(captured);
-  return exitCode == 0;
+  return (int)exitCode;
 }
 
-// cmd.exe 包装执行（chcp 65001 保证子进程输出 UTF-8）
-bool RunCmdImpl(const std::string& workDir, const std::string& cmdline,
-                const LogFn& log, std::string* captureOut) {
+// cmd.exe 包装执行（chcp 65001 保证子进程输出 UTF-8），返回子进程退出码
+int RunCmdImpl(const std::string& workDir, const std::string& cmdline,
+               const LogFn& log, std::string* captureOut) {
   std::wstring cmd = L"cmd.exe /d /s /c \"chcp 65001 >nul && " +
                      ToWide(cmdline) + L"\"";
   return ExecImpl(cmd, workDir, log, captureOut);
@@ -182,6 +183,11 @@ bool RunCmdImpl(const std::string& workDir, const std::string& cmdline,
 
 bool RunCmd(const std::string& workDir, const std::string& cmdline,
             const LogFn& log) {
+  return RunCmdImpl(workDir, cmdline, log, nullptr) == 0;
+}
+
+int RunCmdCode(const std::string& workDir, const std::string& cmdline,
+               const LogFn& log) {
   return RunCmdImpl(workDir, cmdline, log, nullptr);
 }
 
@@ -280,6 +286,55 @@ bool BuildAsync(const std::string& repoRoot, const LogFn& log) {
 
 // ---------- 发布 ----------
 
+// 发布脚本（写盘到 %TEMP% 后执行；纯 ASCII，中文提交信息经 %~1 参数传入）。
+// 关键点：Pages 部署 gh-pages 分支的【根目录】，所以 gh-pages 上必须只有站点文件本身，
+// 不能把整个仓库（dist 嵌套在 docs/.vitepress/dist/ 里）推上去——根下没有 index.html，
+// Pages 构建会失败并一直保留上一次旧部署。
+// 做法：用独立临时 index（GIT_INDEX_FILE）暂存 dist，write-tree --prefix 把
+// docs/.vitepress/dist 子树写成根目录树，commit-tree 生成孤儿提交（CGPublish 身份），
+// 最后 push <sha>:refs/heads/gh-pages --force。全程不碰用户的 index/HEAD，main 无临时提交。
+// 结果写进 %TEMP%\cg-ghp-result.txt（不依赖 exit code：cmd 经 call/&& 复合命令调用
+// 时 exit /b 的退出码传播不可靠）。内容：OK 推送成功 / SKIP 内容无变化 / FAIL:步骤 失败。
+constexpr const char* kPublishBat = R"bat(@echo off
+setlocal
+cd /d "%~2"
+set "RESULT=%TEMP%\cg-ghp-result.txt"
+del /q "%RESULT%" 2>nul
+set "GIT_AUTHOR_NAME=CGPublish"
+set "GIT_AUTHOR_EMAIL=publish@cg.local"
+set "GIT_COMMITTER_NAME=CGPublish"
+set "GIT_COMMITTER_EMAIL=publish@cg.local"
+set "GIT_INDEX_FILE=%TEMP%\cg-ghp-index"
+del /q "%GIT_INDEX_FILE%" 2>nul
+git read-tree --empty || (echo FAIL:read-tree>"%RESULT%" & exit /b 1)
+rem core.autocrlf=false：dist 文件是 LF 行尾，仓库 autocrlf=true 时 git add 会逐文件刷
+rem "LF will be replaced by CRLF" 警告（几十条刷屏）。存储内容本就不做转换，关掉无影响。
+git -c core.autocrlf=false add -f docs/.vitepress/dist || (echo FAIL:add>"%RESULT%" & exit /b 1)
+for /f "delims=" %%T in ('git write-tree --prefix^=docs/.vitepress/dist/') do set "TREE=%%T"
+if not defined TREE (echo FAIL:write-tree>"%RESULT%" & exit /b 1)
+set "REMOTE_TREE="
+git fetch origin gh-pages --quiet 2>nul
+if not errorlevel 1 for /f "delims=" %%R in ('git log -1 --format^=%%T FETCH_HEAD 2^>nul') do set "REMOTE_TREE=%%R"
+if "%TREE%"=="%REMOTE_TREE%" (echo SKIP>"%RESULT%" & exit /b 3)
+for /f "delims=" %%C in ('git commit-tree %TREE% -m "%~1" -m "Co-Authored-By: Claude Code ^<noreply@anthropic.com^>"') do set "COMMIT=%%C"
+if not defined COMMIT (echo FAIL:commit-tree>"%RESULT%" & exit /b 1)
+git push origin %COMMIT%:refs/heads/gh-pages --force || (echo FAIL:push>"%RESULT%" & exit /b 1)
+del /q "%GIT_INDEX_FILE%" 2>nul
+echo OK>"%RESULT%"
+exit /b 0
+)bat";
+
+// 把 bat 内容转成 CRLF 行尾（LF-only 的 bat 在 cmd 下有解析隐患）
+std::string ToCrlf(const std::string& s) {
+  std::string out;
+  out.reserve(s.size() + 16);
+  for (char ch : s) {
+    if (ch == '\n') out += '\r';
+    out += ch;
+  }
+  return out;
+}
+
 bool PublishAsync(const std::string& repoRoot, const LogFn& log) {
   std::string dist = DistDir(repoRoot);
   if (!fs::exists(fs::u8path(dist) / "index.html")) {
@@ -295,16 +350,8 @@ bool PublishAsync(const std::string& repoRoot, const LogFn& log) {
     }
     if (log) log("→ 已创建 dist/.nojekyll（跳过 Jekyll，确保 .vitepress 目录可访问）", false);
   }
-  if (log) log("→ 暂存 dist 产物（git add -f，dist 被 .gitignore 忽略）", false);
-  if (!RunCmd(repoRoot, "git add -f docs/.vitepress/dist", log)) return false;
 
-  std::string hasChanges =
-      CaptureCmd(repoRoot, "git diff --cached --quiet && echo YES || echo NO");
-  if (hasChanges == "YES") {
-    if (log) log("站点内容无变化，跳过提交", false);
-    return true;
-  }
-
+  // 提交信息时间戳
   auto now = std::chrono::system_clock::now();
   std::time_t t = std::chrono::system_clock::to_time_t(now);
   std::tm tm{};
@@ -313,29 +360,62 @@ bool PublishAsync(const std::string& repoRoot, const LogFn& log) {
   std::strftime(stamp, sizeof(stamp), "%Y-%m-%d %H:%M", &tm);
   std::string msg = std::string("deploy: CG 笔记站点 ") + stamp;
 
-  if (log) log("→ 生成临时提交（身份：CGPublish，推送后即撤销，不进 main）", false);
-  if (!RunCmd(repoRoot,
-              "git -c user.name=CGPublish -c user.email=publish@cg.local "
-              "commit -m \"" + msg +
-                  "\" -m \"Co-Authored-By: Claude Code <noreply@anthropic.com>\"",
-              log)) {
-    if (log) log("提交失败", true);
-    return false;
+  // 写发布脚本到 %TEMP%（CRLF 行尾）
+  wchar_t tmpDirW[MAX_PATH];
+  GetTempPathW(MAX_PATH, tmpDirW);
+  fs::path bat = fs::path(tmpDirW) / "cg-ghp-publish.bat";
+  {
+    FILE* f = nullptr;
+    if (fopen_s(&f, PathToUtf8(bat).c_str(), "wb") != 0 || !f) {
+      if (log) log("无法写入临时发布脚本：" + PathToUtf8(bat), true);
+      return false;
+    }
+    std::string batCrlf = ToCrlf(kPublishBat);
+    fwrite(batCrlf.data(), 1, batCrlf.size(), f);
+    fclose(f);
   }
-  if (log) log("→ 推送到 gh-pages 分支（--force 覆盖上一次部署快照）", false);
-  bool pushed = RunCmd(repoRoot, "git push origin HEAD:gh-pages --force", log);
 
-  if (log) log("→ 撤销本地临时提交（dist 文件仍留在磁盘，工作区不变）", false);
-  if (!RunCmd(repoRoot, "git reset --mixed HEAD~1", log)) {
-    if (log) log("警告：撤销临时提交失败，请手动执行 git reset --mixed HEAD~1", true);
+  if (log) log("→ 生成站点快照并推送到 gh-pages（站点文件位于分支根目录）", false);
+  fs::path result = fs::path(tmpDirW) / "cg-ghp-result.txt";
+  std::error_code ec;
+  fs::remove(result, ec);
+  RunCmdCode(
+      repoRoot,
+      "call \"" + PathToUtf8(bat) + "\" \"" + msg + "\" \"" + repoRoot + "\"", log);
+  fs::remove(bat, ec);
+
+  // 读结果文件判定（不依赖 exit code：cmd 经 call/&& 复合命令调用时
+  // exit /b 的退出码传播不可靠）
+  std::string status;
+  {
+    FILE* f = nullptr;
+    if (fopen_s(&f, PathToUtf8(result).c_str(), "rb") == 0 && f) {
+      char buf[256];
+      size_t n = fread(buf, 1, sizeof(buf) - 1, f);
+      fclose(f);
+      buf[n] = '\0';
+      status = buf;
+    }
+  }
+  fs::remove(result, ec);
+  size_t a = status.find_first_not_of(" \t\r\n");
+  size_t b = status.find_last_not_of(" \t\r\n");
+  status = (a == std::string::npos) ? std::string()
+                                    : status.substr(a, b - a + 1);
+  if (status == "OK") {
+    if (log) log("✓ 已推送到 gh-pages 分支，GitHub Pages 将自动重新部署", false);
+    return true;
+  }
+  if (status == "SKIP") {
+    if (log) log("站点内容无变化，跳过推送", false);
+    return true;
+  }
+  if (status.rfind("FAIL:", 0) == 0) {
+    if (log) log("推送失败（" + status.substr(5) + "）", true);
     return false;
   }
-  if (!pushed) {
-    if (log) log("推送失败：远端不可达，或 SSH 密钥（~/.ssh）无该仓库写权限", true);
-    return false;
-  }
-  if (log) log("✓ 已推送到 gh-pages 分支，GitHub Pages 将自动重新部署", false);
-  return true;
+  if (log) log("推送失败：发布脚本未正常执行（远端不可达或 SSH 密钥无写权限）", true);
+  return false;
 }
 
 // ---------- 验证 ----------

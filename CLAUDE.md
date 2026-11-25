@@ -12,11 +12,12 @@ GitHub Pages **部署 gh-pages 分支根目录**，站点构建产物**不进 ma
 
 1. `npm run docs:build`（在 `docs/` 下）= `vitepress build`（输出到 `.vitepress/dist/`）+ `scripts/publish-site.mjs`（确保 `dist/.nojekyll` 存在）
    - 不能把 VitePress outDir 直接设为 `docs/`：构建强制 emptyOutDir 会连源文件一起删，所以构建到 `.vitepress/dist`（gitignore 的中间产物）
-2. 发布器（C++）把 dist 推到 gh-pages：`git add -f docs/.vitepress/dist` → 以 `user.name=CGPublish` 身份生成**临时提交** → `git push origin HEAD:gh-pages --force`（gh-pages 只保留最新一次快照）→ `git reset --mixed HEAD~1` 撤销本地临时提交，main 不受影响
+2. 发布器（C++）把 dist 推成 gh-pages 分支**根目录**：独立临时 index（`GIT_INDEX_FILE`）`git add -f docs/.vitepress/dist` → `git write-tree --prefix` 把 dist 子树提为根目录树 → `git commit-tree` 生成孤儿提交（`CGPublish` 身份，gh-pages 只保留最新一次快照）→ `git push <sha>:gh-pages --force`。全程不碰 main 和用户自己的 index/HEAD；流程在 %TEMP% 的 bat 脚本里执行，结果经结果文件回传（cmd 退出码经 call/&& 传播不可靠，勿改回依赖 exit code）
+   - ⚠️ gh-pages 分支上必须是**站点文件本身**（根目录有 index.html），不能把整个仓库推上去——根下没有 index.html 时 Pages 构建失败，线上会一直保留上一次旧部署
 3. `dist/.nojekyll` 必须存在（Pages 会用 Jekyll 排除点开头目录导致 404，publish-site.mjs 会自愈创建）
 4. **发布时不 pull 远端**（用户明确要求：直接以本地构建内容推送）；main 的提交推送由用户自行管理，远端有别人提交时 push 会被拒，需手动 `git pull --rebase`
 
-⚠️ `docs/` 里只有源文件：`*.md`、`public/`、`.vitepress/`、`scripts/`；`.vitepress/dist/` 是构建中间产物（gitignore），**不要手改产物**。Pages 的 Source 需在 GitHub Settings→Pages 设为 gh-pages 分支（根目录）。
+⚠️ `docs/` 里只有源文件：`*.md`、`public/`、`.vitepress/`、`scripts/`；`.vitepress/dist/` 是构建中间产物（gitignore），**不要手改产物**。Pages 的 Source 需在 GitHub Settings→Pages 设为 gh-pages 分支（根目录）——线上一直显示旧内容、与本地对不上，多半是这项设置还指向旧来源。
 
 ## 常用命令
 
@@ -27,19 +28,19 @@ npm run docs:build      # 构建到 .vitepress/dist + 确保 dist/.nojekyll
 npx vitepress build     # 仅验证构建，产物留在 .vitepress/dist
 
 # 发布器（C++ 版，tools/publisher-cpp/）
-cmake --preset vs2022
-cmake --build build/vs2022 --config Release
-cp build/vs2022/Release/yushu-project-management.exe tools/   # ⚠️ 运行中的 exe 被锁定，先关闭
+cmake --preset vs2026
+cmake --build build/vs2026 --config Release
+cp build/vs2026/Release/yushu-project-management.exe tools/   # ⚠️ 运行中的 exe 被锁定，先关闭
 "tools/yushu-project-management.exe" --cli all               # 或 build / publish / open，--repo 指定仓库路径
 
 # demos（每个 demo 是独立 CMake 工程，各自目录下执行）
 cd demos/phase1-GLM
-cmake --preset vs2022
-cmake --build build/vs2022 --config Release
-build/vs2022/Release/glm_demo.exe
+cmake --preset vs2026
+cmake --build build/vs2026 --config Release
+build/vs2026/Release/glm_demo.exe
 ```
 
-本机 CMake 不在 PATH：`C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe`（VS 2022 Build Tools 自带）。
+本机 CMake：winget 装的 Kitware CMake 4.4.4 在 PATH；VS 2026（18.12）装在 `D:\Apps\VS\App`，未装 VS 自带 CMake 组件（旧 C 盘 VS 2022 Build Tools 已卸载）。
 
 ## 结构要点
 

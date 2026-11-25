@@ -3,18 +3,18 @@
   "cmakeMinimumRequired": { "major": 3, "minor": 24 },
   "configurePresets": [
     {
-      "name": "vs2022",
-      "displayName": "Visual Studio 2022 (x64)",
-      "generator": "Visual Studio 17 2022",
+      "name": "vs2026",
+      "displayName": "Visual Studio 2026 (x64)",
+      "generator": "Visual Studio 18 2026",
       "architecture": "x64",
-      "binaryDir": "${sourceDir}/build/vs2022"
+      "binaryDir": "${sourceDir}/build/vs2026"
     }
   ],
   "buildPresets": [
     {
-      "name": "vs2022-release",
+      "name": "vs2026-release",
       "displayName": "Release 构建",
-      "configurePreset": "vs2022",
+      "configurePreset": "vs2026",
       "configuration": "Release"
     }
   ]
