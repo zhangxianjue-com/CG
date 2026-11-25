@@ -2,29 +2,21 @@
 title: "GLM 数学库"
 ---
 
-# Overview 总览
+# Overview 知识体系
 
 ```md
 glm/
-├── 安装/
-│   └── CMake FetchContent（1.0.3，纯头文件）
+├── 安装
+│ └── GitHub 地址: https://github.com/g-truc/glm
 ├── 常用头文件/
-│   ├── glm/glm.hpp
-│   └── glm/gtc/matrix_transform.hpp
+│ ├── glm/glm.hpp
+│ └── glm/gtc/matrix_transform.hpp
 ├── 核心类型与运算/
-│   ├── vec2 / vec3 / vec4
-│   ├── mat3 / mat4
-│   ├── length / normalize
-│   └── dot / cross
-├── 变换/
-│   ├── translate
-│   ├── rotate
-│   └── scale
-├── 相机与投影/
-│   ├── lookAt
-│   └── perspective
-└── 配套 demo/
-    └── demos/phase1-GLM
+│ ├── vec2 / vec3 / vec4
+│ ├── mat3 / mat4
+│ ├── length / normalize
+│ └── dot / cross
+└── End
 ```
 
 # FAQ 常见问题
@@ -51,7 +43,7 @@ glm/
 
 6. 向量参与平移要 w 为几？
 
-   w=1 表示点（参与平移）：mat4 * vec4(v, 1.0f)；方向向量用 w=0（不参与平移）。
+   w=1 表示点（参与平移）：mat4 \* vec4(v, 1.0f)；方向向量用 w=0（不参与平移）。
 
 7. asin/acos 为什么出 NaN？
 
