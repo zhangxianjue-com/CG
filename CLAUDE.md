@@ -8,23 +8,23 @@ CG 图形学学习项目：VitePress 笔记站点（`docs/`）+ C++ demo（`demo
 
 ## 部署架构（最重要，跨多文件才能看懂）
 
-GitHub Pages **直接部署 main 分支的 `/docs` 文件夹**，站点构建产物是**提交进仓库**的：
+GitHub Pages **部署 gh-pages 分支根目录**，站点构建产物**不进 main**：
 
-1. `npm run docs:build`（在 `docs/` 下）= `vitepress build`（输出到 `.vitepress/dist/`）+ `scripts/publish-site.mjs`（清理上次产物后把 dist 复制到 `docs/` 根目录）
-   - 不能把 VitePress outDir 直接设为 `docs/`：构建强制 emptyOutDir 会连源文件一起删，所以两段式
-2. 发布器把被 `.gitignore` 忽略的产物 `git add -f` 后提交并推送 main
-3. `docs/.nojekyll` 必须存在（Pages 会用 Jekyll 排除点开头目录导致 404，发布器会自愈创建）
-4. **发布时不 pull 远端**（用户明确要求：直接以本地构建内容提交推送）；远端有别人提交时 push 会被拒，需手动 `git pull --rebase`
+1. `npm run docs:build`（在 `docs/` 下）= `vitepress build`（输出到 `.vitepress/dist/`）+ `scripts/publish-site.mjs`（确保 `dist/.nojekyll` 存在）
+   - 不能把 VitePress outDir 直接设为 `docs/`：构建强制 emptyOutDir 会连源文件一起删，所以构建到 `.vitepress/dist`（gitignore 的中间产物）
+2. 发布器（C++）把 dist 推到 gh-pages：`git add -f docs/.vitepress/dist` → 以 `user.name=CGPublish` 身份生成**临时提交** → `git push origin HEAD:gh-pages --force`（gh-pages 只保留最新一次快照）→ `git reset --mixed HEAD~1` 撤销本地临时提交，main 不受影响
+3. `dist/.nojekyll` 必须存在（Pages 会用 Jekyll 排除点开头目录导致 404，publish-site.mjs 会自愈创建）
+4. **发布时不 pull 远端**（用户明确要求：直接以本地构建内容推送）；main 的提交推送由用户自行管理，远端有别人提交时 push 会被拒，需手动 `git pull --rebase`
 
-⚠️ `docs/` 里源文件和构建产物**共存**：`*.md`、`public/`、`.vitepress/`、`scripts/` 是源文件；`index.html`、`404.html`、`assets/`、`diagrams/`、`hashmap.json`、`notes/**/*.html` 是产物，**不要手改产物**。
+⚠️ `docs/` 里只有源文件：`*.md`、`public/`、`.vitepress/`、`scripts/`；`.vitepress/dist/` 是构建中间产物（gitignore），**不要手改产物**。Pages 的 Source 需在 GitHub Settings→Pages 设为 gh-pages 分支（根目录）。
 
 ## 常用命令
 
 ```bash
 # 文档站点（在 docs/ 下）
 npm run docs:dev        # 本地开发服务器
-npm run docs:build      # 构建 + 产物铺到 docs/ 根（会改动 docs/ 下产物文件）
-npx vitepress build     # 仅验证构建，产物留在 .vitepress/dist（不改 docs/ 根）
+npm run docs:build      # 构建到 .vitepress/dist + 确保 dist/.nojekyll
+npx vitepress build     # 仅验证构建，产物留在 .vitepress/dist
 
 # 发布器（C++ 版，tools/publisher-cpp/）
 cmake --preset vs2022

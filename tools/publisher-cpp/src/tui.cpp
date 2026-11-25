@@ -105,7 +105,7 @@ int TuiMain() {
     std::lock_guard<std::mutex> lk(st->mu);
     st->lines.emplace_back("yushu-project-management 已就绪。仓库：" + st->repo, false);
     st->lines.emplace_back(
-        "流程：VitePress 构建 → 产物铺到 docs/ 并推送（Pages 直接部署 main 分支的 /docs 文件夹）",
+        "流程：VitePress 构建 → dist 产物推送到 gh-pages 分支（Pages 部署 gh-pages 根目录）",
         false);
     if (!st->siteUrl.empty())
       st->lines.emplace_back("站点地址：" + st->siteUrl, false);

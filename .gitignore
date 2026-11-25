@@ -19,15 +19,9 @@ CMakeFiles/
 # 网站依赖
 node_modules/
 
-# VitePress 构建产物：dist 为中间产物；铺到 docs/ 根的产物由发布器 force-add 提交用于 Pages
+# VitePress 构建产物：dist 为中间产物，由发布器 force-add 临时提交并推送到 gh-pages 分支（不进 main）
 docs/.vitepress/dist/
 docs/.vitepress/cache/
-docs/index.html
-docs/404.html
-docs/assets/
-docs/hashmap.json
-docs/diagrams/
-docs/notes/**/*.html
 
 # 项目管理器构建产物
 tools/publisher-cpp/build/

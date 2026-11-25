@@ -7,16 +7,16 @@ title: "Visual Studio 编辑器"
 # Overview 总览
 
 ```md
-visual-studio/
-├── 安装/
-│ ├── 下载: https://visualstudio.microsoft.com/zh-hans/downloads/
-│ └── IDE（Community 免费）
+Visual Studio 编辑器
+├── Visual Studio Installer
+│ └── 下载: https://visualstudio.microsoft.com/zh-hans/downloads/
+├── Visual Studio Studio
 └── END
 ```
 
 # FAQ 常见问题
 
-1. VS 在哪里下载？
+1. 如何下载`Visual Studio Installer`？
 
    ::: details 查看答案
    官方下载页：https://visualstudio.microsoft.com/zh-hans/downloads/，个人/学习用免费的 **Community** 版即可。
@@ -26,7 +26,7 @@ visual-studio/
 
    :::
 
-2. 安装时要勾选哪些组件？
+2. 安装 C++ 开发环境时，需要勾选哪些组件？
 
    ::: details 查看答案
    核心只勾一个工作负载：**「使用 C++ 的桌面开发」**。

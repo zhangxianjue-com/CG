@@ -65,8 +65,8 @@ std::string DocsDir(const std::string& repoRoot) {
   return PathToUtf8(fs::u8path(repoRoot) / "docs");
 }
 
-std::string SiteIndex(const std::string& repoRoot) {
-  return PathToUtf8(fs::u8path(DocsDir(repoRoot)) / "index.html");
+std::string DistDir(const std::string& repoRoot) {
+  return PathToUtf8(fs::u8path(DocsDir(repoRoot)) / ".vitepress" / "dist");
 }
 
 // ---------- 命令执行 ----------
@@ -269,37 +269,34 @@ bool BuildAsync(const std::string& repoRoot, const LogFn& log) {
       return false;
     }
   }
-  if (log) log("→ 构建 VitePress 站点（npm run docs:build，产物铺到 docs/ 根）", false);
+  if (log) log("→ 构建 VitePress 站点（npm run docs:build，产物在 .vitepress/dist）", false);
   if (!RunCmd(docs, "npm run docs:build", log)) {
     if (log) log("站点构建失败", true);
     return false;
   }
-  if (log) log("✓ 构建完成：" + docs, false);
+  if (log) log("✓ 构建完成：" + DistDir(repoRoot), false);
   return true;
 }
 
 // ---------- 发布 ----------
 
 bool PublishAsync(const std::string& repoRoot, const LogFn& log) {
-  if (!fs::exists(fs::u8path(SiteIndex(repoRoot)))) {
-    if (log) log("构建产物不存在（docs/index.html），请先构建站点", true);
+  std::string dist = DistDir(repoRoot);
+  if (!fs::exists(fs::u8path(dist) / "index.html")) {
+    if (log) log("构建产物不存在（.vitepress/dist/index.html），请先构建站点", true);
     return false;
   }
-  // 保证 docs/.nojekyll 存在：否则 GitHub Pages 用 Jekyll 构建并排除点开头目录
-  std::string nojekyll = PathToUtf8(fs::u8path(DocsDir(repoRoot)) / ".nojekyll");
+  // 保证 dist/.nojekyll 存在：gh-pages 部署时跳过 Jekyll，否则点开头目录被排除
+  std::string nojekyll = PathToUtf8(fs::u8path(dist) / ".nojekyll");
   if (!fs::exists(fs::u8path(nojekyll))) {
     {
       FILE* f = nullptr;
       if (fopen_s(&f, nojekyll.c_str(), "wb") == 0 && f) fclose(f);
     }
-    if (log) log("→ 已创建 docs/.nojekyll（跳过 Jekyll，确保 .vitepress 目录可访问）", false);
+    if (log) log("→ 已创建 dist/.nojekyll（跳过 Jekyll，确保 .vitepress 目录可访问）", false);
   }
-  if (log) log("→ 暂存站点产物（git add docs + 强制加入被忽略的生成文件）", false);
-  if (!RunCmd(repoRoot,
-              "git add docs && git add -f docs/index.html docs/404.html "
-              "docs/assets docs/diagrams docs/hashmap.json docs/notes",
-              log))
-    return false;
+  if (log) log("→ 暂存 dist 产物（git add -f，dist 被 .gitignore 忽略）", false);
+  if (!RunCmd(repoRoot, "git add -f docs/.vitepress/dist", log)) return false;
 
   std::string hasChanges =
       CaptureCmd(repoRoot, "git diff --cached --quiet && echo YES || echo NO");
@@ -316,7 +313,7 @@ bool PublishAsync(const std::string& repoRoot, const LogFn& log) {
   std::strftime(stamp, sizeof(stamp), "%Y-%m-%d %H:%M", &tm);
   std::string msg = std::string("deploy: CG 笔记站点 ") + stamp;
 
-  if (log) log("→ 提交站点产物（身份：CGPublish）", false);
+  if (log) log("→ 生成临时提交（身份：CGPublish，推送后即撤销，不进 main）", false);
   if (!RunCmd(repoRoot,
               "git -c user.name=CGPublish -c user.email=publish@cg.local "
               "commit -m \"" + msg +
@@ -325,14 +322,19 @@ bool PublishAsync(const std::string& repoRoot, const LogFn& log) {
     if (log) log("提交失败", true);
     return false;
   }
-  if (log) log("→ 推送 main 分支（触发 GitHub Pages 重新部署）", false);
-  if (!RunCmd(repoRoot, "git push origin main", log)) {
-    if (log) log("推送失败：远端可能有新提交（本地历史落后，需先手动 git pull --rebase 处理），"
-                 "或 SSH 密钥（~/.ssh）无该仓库写权限",
-                 true);
+  if (log) log("→ 推送到 gh-pages 分支（--force 覆盖上一次部署快照）", false);
+  bool pushed = RunCmd(repoRoot, "git push origin HEAD:gh-pages --force", log);
+
+  if (log) log("→ 撤销本地临时提交（dist 文件仍留在磁盘，工作区不变）", false);
+  if (!RunCmd(repoRoot, "git reset --mixed HEAD~1", log)) {
+    if (log) log("警告：撤销临时提交失败，请手动执行 git reset --mixed HEAD~1", true);
     return false;
   }
-  if (log) log("✓ 已推送，GitHub Pages 将自动重新部署 docs/ 文件夹", false);
+  if (!pushed) {
+    if (log) log("推送失败：远端不可达，或 SSH 密钥（~/.ssh）无该仓库写权限", true);
+    return false;
+  }
+  if (log) log("✓ 已推送到 gh-pages 分支，GitHub Pages 将自动重新部署", false);
   return true;
 }
 

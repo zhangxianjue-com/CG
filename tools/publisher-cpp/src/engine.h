@@ -16,7 +16,7 @@ std::wstring ToWide(const std::string& s);
 std::string ExeDir();
 std::string FindRepoRoot(const std::string& start);
 std::string DocsDir(const std::string& repoRoot);
-std::string SiteIndex(const std::string& repoRoot);
+std::string DistDir(const std::string& repoRoot);
 
 // 命令执行（cmd.exe 包裹，UTF-8 解码输出，逐行回调）
 bool RunCmd(const std::string& workDir, const std::string& cmdline, const LogFn& log);
