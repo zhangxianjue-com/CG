@@ -34,13 +34,32 @@ export default defineConfig({
               {
                 text: "代码编辑器",
                 items: [
-                  { text: "Visual Studio 编辑器", link: "/notes/01-cpp/visual-studio" },
-                  { text: "VS Code 编辑器", link: "/notes/01-cpp/vs-code" },
+                  { text: "Visual Studio 编辑器", link: "/notes/01-cpp/editor/visual-studio" },
+                  { text: "VS Code 编辑器", link: "/notes/01-cpp/editor/vs-code" },
                 ],
               },
-              { text: "数据类型", link: "/notes/01-cpp/data-types" },
-              { text: "面向对象编码", link: "/notes/01-cpp/oop" },
-              { text: "GLM 数学库", link: "/notes/01-cpp/glm" },
+              {
+                text: "编码",
+                items: [
+                  { text: "编译器", link: "/notes/01-cpp/coding/compiler" },
+                  { text: "数据类型", link: "/notes/01-cpp/coding/data-types" },
+                  { text: "语句", link: "/notes/01-cpp/coding/statement" },
+                  { text: "面向对象编程", link: "/notes/01-cpp/coding/oop" },
+                  { text: "模块化编程", link: "/notes/01-cpp/coding/module" },
+                ],
+              },
+
+              {
+                text: "项目构建",
+                items: [
+                  { text: "CMake 构建工具", link: "/notes/01-cpp/build/cmake" },
+                  { text: "vcpkg 依赖库管理工具", link: "/notes/01-cpp/build/vcpkg" },
+                ],
+              },
+              {
+                text: "第三方库（协同合作）",
+                items: [{ text: "GLM 数学库", link: "/notes/01-cpp/library/glm" }],
+              },
             ],
           },
         ],

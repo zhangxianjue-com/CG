@@ -40,7 +40,7 @@ cmake --build build/vs2026 --config Release
 build/vs2026/Release/glm_demo.exe
 ```
 
-本机 CMake：winget 装的 Kitware CMake 4.4.4 在 PATH；VS 2026（18.12）装在 `D:\Apps\VS\App`，未装 VS 自带 CMake 组件（旧 C 盘 VS 2022 Build Tools 已卸载）。
+本机 CMake：winget 装的 Kitware CMake 4.4.4 在 PATH；VS 2026（18.12）装在 `D:\Apps\VS\App`，自带 CMake 组件已装（2026-11-26 验证，旧 C 盘 VS 2022 Build Tools 已卸载）。vcpkg 装在 `D:\Apps\vcpkg`，demos 的 CMakePresets 里以 `toolchainFile` 硬编码引用。
 
 ## 结构要点
 

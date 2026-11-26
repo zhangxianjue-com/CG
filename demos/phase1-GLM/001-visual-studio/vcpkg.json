@@ -1,0 +1,8 @@
+{
+  "name": "glm-demo",
+  "version-string": "0.1.0",
+  "description": "GLM 数学库学习 demo（vcpkg manifest 模式）",
+  "dependencies": [
+    "glm"
+  ]
+}

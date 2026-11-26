@@ -1,7 +1,7 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "e:\\github\\cg\\demos\\phase1-glm\\glm-cpp\\glm-cpp.cpp",
+        "Source": "e:\\github\\cg\\demos\\phase1-glm\\001-visual-studio\\glm-cpp.cpp",
         "ProvidedModule": "",
         "Includes": [
             "d:\\apps\\vs\\app\\vc\\tools\\msvc\\14.52.37025\\include\\iostream",
