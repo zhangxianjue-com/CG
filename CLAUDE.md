@@ -38,9 +38,14 @@ cd demos/phase1-GLM
 cmake --preset vs2026
 cmake --build build/vs2026 --config Release
 build/vs2026/Release/glm_demo.exe
+
+# 无预设的 demo（005 无 CMakePresets.json）
+cmake -S . -B build
+cmake --build build --config Release
+build/Release/vscode-glm.exe
 ```
 
-本机 CMake：winget 装的 Kitware CMake 4.4.4 在 PATH；VS 2026（18.12）装在 `D:\Apps\VS\App`，自带 CMake 组件已装（2026-11-26 验证，旧 C 盘 VS 2022 Build Tools 已卸载）。vcpkg 装在 `D:\Apps\vcpkg`，demos 的 CMakePresets 里以 `toolchainFile` 硬编码引用。
+本机 CMake：winget 装的 Kitware CMake 4.4.4 在 PATH；VS 2026（18.12）装在 `D:\Apps\VS\App`，自带 CMake 组件已装（2026-11-26 验证，旧 C 盘 VS 2022 Build Tools 已卸载）。vcpkg 装在 `D:\Apps\vcpkg`，001 用 manifest 模式（CMakePresets 以 `toolchainFile` 硬编码引用），005 改用 FetchContent 拉取 GLM、不依赖 vcpkg。
 
 ## 结构要点
 

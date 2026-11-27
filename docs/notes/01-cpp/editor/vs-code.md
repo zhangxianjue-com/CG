@@ -25,9 +25,9 @@ VS Code（轻量代码编辑器）
       ![VS Code 安装器勾选附加任务](/diagrams/01-cpp/vscode-installer.svg)
 
    3. **③ 中文界面**：装好后按 `Ctrl+Shift+X` 打开扩展市场 → 搜 Chinese (Simplified) Language Pack → 安装 → 重启生效。
-   :::
+      :::
 
-2. 如何配置 VS Code 的 C++ 开发环境？
+2. 如何配置 C++ 开发环境？
 
    ::: details 查看答案
    1. **① 安装环境**：安装「Visual Studio Installer」→ 勾选工作负载「使用 C++ 的桌面开发」→ 安装 → 开始菜单「Developer Command Prompt for VS 2026」输入 `code` 启动 VS Code，终端里就能直接用本机的 MSVC 工具集（`cl`）。
