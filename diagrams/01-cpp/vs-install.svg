@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 330" width="720" height="330">
+  <rect width="720" height="330" fill="#ffffff"/>
+  <text x="24" y="38" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="20" font-weight="600" fill="#343a40">① 安装环境：勾选「使用 C++ 的桌面开发」</text>
+
+  <!-- 左侧：工作负载列表 -->
+  <rect x="24" y="58" width="300" height="212" rx="8" fill="#f8f9fa" stroke="#dee2e6"/>
+  <text x="40" y="86" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="15" font-weight="600" fill="#495057">工作负载</text>
+  <rect x="32" y="100" width="284" height="36" rx="6" fill="#e7f5ff" stroke="#1971c2"/>
+  <rect x="44" y="111" width="14" height="14" rx="3" fill="#1971c2" stroke="#1971c2"/>
+  <path d="M46.5 118 L49.5 121 L55.5 114.5" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <text x="68" y="123" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="14" font-weight="600" fill="#1971c2">使用 C++ 的桌面开发</text>
+  <rect x="44" y="146" width="14" height="14" rx="3" fill="none" stroke="#adb5bd"/>
+  <text x="68" y="158" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="14" fill="#495057">.NET 桌面开发</text>
+  <rect x="44" y="180" width="14" height="14" rx="3" fill="none" stroke="#adb5bd"/>
+  <text x="68" y="192" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="14" fill="#495057">Python 开发</text>
+  <rect x="44" y="214" width="14" height="14" rx="3" fill="none" stroke="#adb5bd"/>
+  <text x="68" y="226" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="14" fill="#495057">使用 Unity 的游戏开发</text>
+
+  <!-- 右侧：安装详细信息 -->
+  <rect x="344" y="58" width="352" height="212" rx="8" fill="#ffffff" stroke="#1971c2" stroke-dasharray="6 5"/>
+  <text x="360" y="86" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="15" font-weight="600" fill="#1971c2">安装详细信息（默认自动勾上）</text>
+  <rect x="356" y="102" width="14" height="14" rx="3" fill="#1971c2" stroke="#1971c2"/>
+  <path d="M358.5 109 L361.5 112 L367.5 105.5" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <text x="380" y="114" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="14" fill="#343a40">MSVC 编译器工具集（v144 = VS 2026）</text>
+  <rect x="356" y="130" width="14" height="14" rx="3" fill="#1971c2" stroke="#1971c2"/>
+  <path d="M358.5 137 L361.5 140 L367.5 133.5" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <text x="380" y="142" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="14" fill="#343a40">Windows SDK</text>
+  <rect x="356" y="158" width="14" height="14" rx="3" fill="#1971c2" stroke="#1971c2"/>
+  <path d="M358.5 165 L361.5 168 L367.5 161.5" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <text x="380" y="170" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="14" fill="#343a40">适用于 Windows 的 C++ CMake 工具</text>
+  <rect x="356" y="186" width="14" height="14" rx="3" fill="#1971c2" stroke="#1971c2"/>
+  <path d="M358.5 193 L361.5 196 L367.5 189.5" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <text x="380" y="198" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="14" fill="#343a40">调试工具</text>
+  <text x="360" y="244" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="12" fill="#868e96">工作负载 = 套餐，单个组件 = 单点；新手勾套餐即可</text>
+
+  <!-- 按钮与提示 -->
+  <rect x="600" y="288" width="96" height="34" rx="6" fill="#1971c2"/>
+  <text x="648" y="310" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="15" font-weight="600" fill="#ffffff" text-anchor="middle">安装</text>
+  <text x="24" y="310" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="13" fill="#868e96">安装位置默认 C 盘即可；磁盘紧张可在「安装位置」改到其他盘</text>
+</svg>

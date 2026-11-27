@@ -1,0 +1,21 @@
+import{_ as a,o as i,c as n,a2 as p}from"./chunks/framework.DtFQgA2F.js";const r=JSON.parse('{"title":"数据类型","description":"","frontmatter":{"title":"数据类型"},"headers":[],"relativePath":"notes/01-cpp/coding/data-types.md","filePath":"notes/01-cpp/coding/data-types.md","lastUpdated":1795687082000}'),l={name:"notes/01-cpp/coding/data-types.md"};function t(e,s,E,h,o,k){return i(),n("div",null,[...s[0]||(s[0]=[p(`<h1 id="markmap-知识体系" tabindex="-1">Markmap 知识体系 <a class="header-anchor" href="#markmap-知识体系" aria-label="Permalink to &quot;Markmap 知识体系&quot;">​</a></h1><div class="language-md vp-adaptive-theme"><button title="Copy Code" class="copy"></button><span class="lang">md</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">数据类型/</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">├── 基本类型/</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">│   ├── bool</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">│   ├── char</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">│   ├── short</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">│   ├── int</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">│   ├── long long</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">│   ├── float</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">│   └── double</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">├── 常量/</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">│   ├── const</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">│   └── constexpr</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">├── 引用与指针/</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">│   ├── 引用</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">│   └── 指针</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">├── auto 类型推导</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">├── 容器/</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">│   ├── std::vector</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">│   └── std::string</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">├── 结构体 struct</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">└── enum class</span></span></code></pre></div><h1 id="faq-常见问题" tabindex="-1">FAQ 常见问题 <a class="header-anchor" href="#faq-常见问题" aria-label="Permalink to &quot;FAQ 常见问题&quot;">​</a></h1><ol><li><p>CPU 端用 float 还是 double？为什么？</p><p>CPU 用 double（约 16 位有效数字），上传 GPU 时再转 float。float 只有约 7 位，光线追踪数百万次乘加的累积误差会以噪点、命中偏移的形式出现；GPU 显存和带宽有限所以仍用 float。</p></li><li><p>字面量后缀 3.14f、42u、42L 分别是什么？</p><p>3.14f 是 float、42u 是 unsigned、42L 是 long；无后缀的 3.14 是 double。</p></li><li><p>const 和 constexpr 有什么区别？</p><p>const 是运行期常量（值不可改）；constexpr 是编译期常量，可用于数组大小。屏幕尺寸、采样数、材质参数尽量用 constexpr，编译期就能检查。</p></li><li><p>引用和指针有什么区别？什么时候用哪个？</p><p>引用是别名：不可重绑定、必须初始化；指针存地址：可重绑定、可为空。传参不想拷贝用 const&amp;（只读）或 &amp;（要修改）；指针留给「可能没有值」和数组/动态内存的场景。</p></li><li><p>auto 推导有什么陷阱？</p><p>auto 会剥掉引用和 const：auto p = getVec(); 是一次拷贝，大结构体要用 auto&amp; 或 const auto&amp;。</p></li><li><p>为什么动态数据优先用 std::vector？</p><p>自动管理内存、动态增长，reserve 可预留容量避免反复分配；C 风格数组只在尺寸编译期确定且固定时用。</p></li><li><p>为什么 1 / 2 等于 0？</p><p>整数除法。想得 0.5 写 1.0 / 2 或 double(1) / 2。</p></li><li><p>为什么 for (size_t i = n - 1; i &gt;= 0; --i) 会死循环？</p><p>size_t 无符号，i &gt;= 0 永远为真。</p></li><li><p>浮点数怎么比较相等？</p><p>别用 ==，用 std::fabs(a - b) &lt; 1e-9（见 phase1-GLM demo 的 near() 写法）。</p></li><li><p>隐式转换会丢精度吗？</p><p>int → double 无损；double → int 截断（(int)3.7 == 3）；float → double 无益（精度已丢）。</p></li></ol>`,4)])])}const c=a(l,[["render",t]]);export{r as __pageData,c as default};

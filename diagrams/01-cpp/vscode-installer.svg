@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 330" width="720" height="330">
+  <rect width="720" height="330" fill="#ffffff"/>
+  <text x="24" y="38" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="20" font-weight="600" fill="#343a40">② 安装：安装器里勾选「添加到 PATH」</text>
+
+  <!-- 附加任务面板 -->
+  <rect x="24" y="58" width="672" height="230" rx="8" fill="#f8f9fa" stroke="#dee2e6"/>
+  <text x="40" y="88" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="15" font-weight="600" fill="#495057">选择附加任务</text>
+
+  <!-- 1. 创建桌面快捷方式 -->
+  <rect x="44" y="106" width="14" height="14" rx="3" fill="none" stroke="#adb5bd"/>
+  <text x="68" y="118" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="14" fill="#495057">创建桌面快捷方式</text>
+
+  <!-- 2. 添加到 PATH（重点强调） -->
+  <rect x="36" y="132" width="656" height="38" rx="6" fill="#e7f5ff" stroke="#1971c2"/>
+  <rect x="44" y="144" width="14" height="14" rx="3" fill="#1971c2" stroke="#1971c2"/>
+  <path d="M46.5 151 L49.5 154 L55.5 147.5" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <text x="68" y="156" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="14" font-weight="600" fill="#1971c2">添加到 PATH（重启终端后生效）</text>
+  <text x="480" y="156" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="13" fill="#1971c2">← 关键：终端直接输入 code 启动</text>
+
+  <!-- 3. 右键菜单 -->
+  <rect x="44" y="188" width="14" height="14" rx="3" fill="#1971c2" stroke="#1971c2"/>
+  <path d="M46.5 195 L49.5 198 L55.5 191.5" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <text x="68" y="200" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="14" fill="#495057">将「通过 Code 打开」添加到资源管理器右键菜单</text>
+
+  <!-- 4. 注册为编辑器 -->
+  <rect x="44" y="222" width="14" height="14" rx="3" fill="#1971c2" stroke="#1971c2"/>
+  <path d="M46.5 229 L49.5 232 L55.5 225.5" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <text x="68" y="234" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="14" fill="#495057">将 Code 注册为受支持文件类型的编辑器</text>
+
+  <text x="40" y="268" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="13" fill="#868e96">不勾 PATH 也能用，但启动方式只剩开始菜单/桌面图标，命令行开发建议勾上</text>
+
+  <!-- 按钮 -->
+  <rect x="600" y="296" width="96" height="34" rx="6" fill="#1971c2"/>
+  <text x="648" y="318" font-family="Segoe UI, Microsoft YaHei, Helvetica, sans-serif" font-size="15" font-weight="600" fill="#ffffff" text-anchor="middle">下一步</text>
+</svg>
